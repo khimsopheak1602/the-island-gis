@@ -1,1033 +1,2372 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Island GIS — Applied Geospatial Education for Cambodia</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Island GIS — Applied Geospatial Education for Cambodia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-:root{
-  --g1:#0d2b1a; --g2:#1a4731; --g3:#1f6b3e; --g4:#2e8b57; --g5:#4caf78;
-  --g-light:#e8f5e9; --g-pale:#f0faf2;
-  --ivory:#faf8f3; --cream:#f2ede4;
-  --gold:#c8970a; --gold-l:#fff8e1; --earth:#7a5520;
-  --teal:#1a6b6b; --teal-l:#e0f2f1;
-  --blue:#1a3d6b; --blue-l:#e3f0ff;
-  --ink:#1a1a2e; --ink-m:#3d3d50; --ink-l:#6b6b80;
-  --border:#d8e8da; --white:#ffffff; --gray:#f4f5f2;
-  --shadow:0 2px 20px rgba(13,43,26,.08);
-  --shadow-lg:0 8px 48px rgba(13,43,26,.14);
-}
+    :root {
+      --g1: #0d2b1a;
+      --g2: #1a4731;
+      --g3: #1f6b3e;
+      --g4: #2e8b57;
+      --g5: #4caf78;
+      --g-light: #e8f5e9;
+      --g-pale: #f0faf2;
+      --ivory: #faf8f3;
+      --cream: #f2ede4;
+      --gold: #c8970a;
+      --gold-l: #fff8e1;
+      --earth: #7a5520;
+      --teal: #1a6b6b;
+      --teal-l: #e0f2f1;
+      --blue: #1a3d6b;
+      --blue-l: #e3f0ff;
+      --ink: #1a1a2e;
+      --ink-m: #3d3d50;
+      --ink-l: #6b6b80;
+      --border: #d8e8da;
+      --white: #ffffff;
+      --gray: #f4f5f2;
+      --shadow: 0 2px 20px rgba(13, 43, 26, .08);
+      --shadow-lg: 0 8px 48px rgba(13, 43, 26, .14);
+    }
 
-html{scroll-behavior:smooth}
-body{font-family:'Jost',sans-serif;background:var(--ivory);color:var(--ink);line-height:1.65;overflow-x:hidden}
+    html {
+      scroll-behavior: smooth
+    }
 
-/* ── NAV ── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;
-  background:rgba(13,43,26,.96);backdrop-filter:blur(14px);
-  border-bottom:1px solid rgba(255,255,255,.07);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 40px;height:62px;
-}
-.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer}
-.nav-logo{
-  width:34px;height:34px;border-radius:9px;
-  background:linear-gradient(135deg,var(--g3),var(--g5));
-  display:flex;align-items:center;justify-content:center;
-  font-size:18px;
-}
-.nav-name{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:700;color:white;letter-spacing:.01em}
-.nav-links{display:flex;gap:2px}
-.nav-link{
-  padding:8px 18px;border-radius:8px;font-size:13px;font-weight:500;
-  color:rgba(255,255,255,.6);cursor:pointer;transition:all .2s;border:none;background:none;
-  font-family:'Jost',sans-serif;
-}
-.nav-link:hover{color:white;background:rgba(255,255,255,.09)}
-.nav-link.active{color:white;background:var(--g3)}
-.nav-cta{
-  padding:9px 20px;border-radius:8px;font-size:13px;font-weight:600;
-  background:var(--g4);color:white;border:none;cursor:pointer;transition:all .2s;
-  font-family:'Jost',sans-serif;
-}
-.nav-cta:hover{background:var(--g3);transform:translateY(-1px)}
-@media(max-width:680px){nav{padding:0 18px}.nav-links{display:none}.nav-name{font-size:16px}}
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--ivory);
+      color: var(--ink);
+      line-height: 1.65;
+      overflow-x: hidden
+    }
 
-/* ── PAGES ── */
-.page{display:none;min-height:100vh;padding-top:62px;animation:fadeUp .38s ease}
-.page.active{display:block}
-@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background: rgba(13, 43, 26, .96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255, 255, 255, .07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 62px;
+    }
 
-/* ── TOPO SVG ── */
-.topo{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-.topo svg{position:absolute;width:100%;height:100%;opacity:.06}
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      cursor: pointer
+    }
 
-/* ── BUTTONS ── */
-.btn{
-  display:inline-flex;align-items:center;gap:7px;
-  padding:12px 26px;border-radius:10px;font-family:'Jost',sans-serif;
-  font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .22s;
-  text-decoration:none;
-}
-.btn-green{background:var(--g4);color:white;box-shadow:0 4px 18px rgba(46,139,87,.3)}
-.btn-green:hover{background:var(--g3);transform:translateY(-2px);box-shadow:0 7px 24px rgba(46,139,87,.4)}
-.btn-outline-white{background:transparent;color:white;border:1.5px solid rgba(255,255,255,.4)}
-.btn-outline-white:hover{border-color:white;background:rgba(255,255,255,.1)}
-.btn-outline-green{background:transparent;color:var(--g3);border:1.5px solid var(--g3)}
-.btn-outline-green:hover{background:var(--g-pale);transform:translateY(-1px)}
-.btn-ghost{background:var(--g-pale);color:var(--g3);border:1px solid var(--border)}
-.btn-ghost:hover{background:var(--g-light);border-color:var(--g4)}
-.btn-sm{padding:8px 16px;font-size:13px}
+    .nav-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, var(--g3), var(--g5));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
 
-/* ── SECTION COMMON ── */
-.section{padding:80px 24px}
-.section-inner{max-width:1080px;margin:0 auto}
-.s-label{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--g4);margin-bottom:10px}
-.s-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,42px);font-weight:700;color:var(--g1);line-height:1.15;margin-bottom:14px}
-.s-body{font-size:15.5px;color:var(--ink-m);line-height:1.72;max-width:640px;margin-bottom:28px}
+    .nav-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: .01em
+    }
 
-/* ═══════════════════════════════════════════════════════
+    .nav-links {
+      display: flex;
+      gap: 2px
+    }
+
+    .nav-link {
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, .6);
+      cursor: pointer;
+      transition: all .2s;
+      border: none;
+      background: none;
+      font-family: 'Jost', sans-serif;
+    }
+
+    .nav-link:hover {
+      color: white;
+      background: rgba(255, 255, 255, .09)
+    }
+
+    .nav-link.active {
+      color: white;
+      background: var(--g3)
+    }
+
+    .nav-cta {
+      padding: 9px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      background: var(--g4);
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: all .2s;
+      font-family: 'Jost', sans-serif;
+    }
+
+    .nav-cta:hover {
+      background: var(--g3);
+      transform: translateY(-1px)
+    }
+
+    @media(max-width:680px) {
+      nav {
+        padding: 0 18px
+      }
+
+      .nav-links {
+        display: none
+      }
+
+      .nav-name {
+        font-size: 16px
+      }
+    }
+
+    /* ── PAGES ── */
+    .page {
+      display: none;
+      min-height: 100vh;
+      padding-top: 62px;
+      animation: fadeUp .38s ease
+    }
+
+    .page.active {
+      display: block
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    /* ── TOPO SVG ── */
+    .topo {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0
+    }
+
+    .topo svg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: .06
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 12px 26px;
+      border-radius: 10px;
+      font-family: 'Jost', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all .22s;
+      text-decoration: none;
+    }
+
+    .btn-green {
+      background: var(--g4);
+      color: white;
+      box-shadow: 0 4px 18px rgba(46, 139, 87, .3)
+    }
+
+    .btn-green:hover {
+      background: var(--g3);
+      transform: translateY(-2px);
+      box-shadow: 0 7px 24px rgba(46, 139, 87, .4)
+    }
+
+    .btn-outline-white {
+      background: transparent;
+      color: white;
+      border: 1.5px solid rgba(255, 255, 255, .4)
+    }
+
+    .btn-outline-white:hover {
+      border-color: white;
+      background: rgba(255, 255, 255, .1)
+    }
+
+    .btn-outline-green {
+      background: transparent;
+      color: var(--g3);
+      border: 1.5px solid var(--g3)
+    }
+
+    .btn-outline-green:hover {
+      background: var(--g-pale);
+      transform: translateY(-1px)
+    }
+
+    .btn-ghost {
+      background: var(--g-pale);
+      color: var(--g3);
+      border: 1px solid var(--border)
+    }
+
+    .btn-ghost:hover {
+      background: var(--g-light);
+      border-color: var(--g4)
+    }
+
+    .btn-sm {
+      padding: 8px 16px;
+      font-size: 13px
+    }
+
+    /* ── SECTION COMMON ── */
+    .section {
+      padding: 80px 24px
+    }
+
+    .section-inner {
+      max-width: 1080px;
+      margin: 0 auto
+    }
+
+    .s-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--g4);
+      margin-bottom: 10px
+    }
+
+    .s-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(26px, 4vw, 42px);
+      font-weight: 700;
+      color: var(--g1);
+      line-height: 1.15;
+      margin-bottom: 14px
+    }
+
+    .s-body {
+      font-size: 15.5px;
+      color: var(--ink-m);
+      line-height: 1.72;
+      max-width: 640px;
+      margin-bottom: 28px
+    }
+
+    /* ═══════════════════════════════════════════════════════
    HOME PAGE
 ═══════════════════════════════════════════════════════ */
 
-/* Hero */
-.home-hero{
-  position:relative;min-height:94vh;
-  display:flex;align-items:center;
-  background:var(--g1);overflow:hidden;
-}
-.home-hero-inner{
-  position:relative;z-index:1;max-width:1080px;margin:0 auto;
-  padding:80px 40px;display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:center;
-}
-@media(max-width:900px){.home-hero-inner{grid-template-columns:1fr;padding:60px 24px}}
-.hero-eyebrow{
-  display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
-  color:#a8d5b5;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
-  padding:6px 16px;border-radius:20px;margin-bottom:24px;
-}
-.hero-title{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(36px,6vw,68px);font-weight:700;color:white;
-  line-height:1.06;margin-bottom:14px;
-}
-.hero-title em{color:var(--g5);font-style:italic}
-.hero-desc{font-size:16px;color:rgba(255,255,255,.72);line-height:1.72;margin-bottom:32px;max-width:520px}
-.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+    /* Hero */
+    .home-hero {
+      position: relative;
+      min-height: 94vh;
+      display: flex;
+      align-items: center;
+      background: var(--g1);
+      overflow: hidden;
+    }
 
-/* Hero right card */
-.hero-card{
-  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
-  border-radius:20px;padding:32px;backdrop-filter:blur(8px);
-}
-.hero-card-title{font-family:'Cormorant Garamond',serif;font-size:18px;color:#a8d5b5;font-weight:600;margin-bottom:20px}
-.hero-pillars{display:flex;flex-direction:column;gap:14px}
-.pillar{display:flex;align-items:flex-start;gap:12px}
-.pillar-icon{
-  width:36px;height:36px;border-radius:9px;flex-shrink:0;
-  background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:17px;
-}
-.pillar-text{font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.5}
-.pillar-text strong{color:white;display:block;font-size:14px;margin-bottom:2px}
+    .home-hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 80px 40px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 60px;
+      align-items: center;
+    }
 
-/* Mission section */
-.mission-section{background:var(--ivory);padding:88px 24px}
-.mission-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
-@media(max-width:820px){.mission-inner{grid-template-columns:1fr}}
-.mission-quote{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(22px,3vw,34px);font-style:italic;font-weight:600;
-  color:var(--g1);line-height:1.3;
-  border-left:4px solid var(--g4);padding-left:24px;margin-bottom:28px;
-}
-.mission-text{font-size:15.5px;color:var(--ink-m);line-height:1.72;margin-bottom:16px}
+    @media(max-width:900px) {
+      .home-hero-inner {
+        grid-template-columns: 1fr;
+        padding: 60px 24px
+      }
+    }
 
-/* Three pillars */
-.pillars-dark{background:var(--g1);padding:80px 24px}
-.pillars-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:2px;margin-top:44px}
-.pillar-card{background:rgba(255,255,255,.04);padding:36px 28px;border:1px solid rgba(255,255,255,.07);transition:all .25s}
-.pillar-card:hover{background:rgba(255,255,255,.08)}
-.pillar-number{
-  font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:700;
-  color:rgba(255,255,255,.08);line-height:1;margin-bottom:12px;
-}
-.pillar-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:white;margin-bottom:10px}
-.pillar-body{font-size:13.5px;color:rgba(255,255,255,.55);line-height:1.65}
+    .hero-eyebrow {
+      display: inline-block;
+      background: rgba(255, 255, 255, .1);
+      border: 1px solid rgba(255, 255, 255, .18);
+      color: #a8d5b5;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
 
-/* Why different */
-.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:40px}
-.why-card{
-  background:white;border:1px solid var(--border);border-radius:14px;padding:26px;
-  transition:all .25s;
-}
-.why-card:hover{border-color:var(--g4);transform:translateY(-3px);box-shadow:var(--shadow)}
-.why-icon{font-size:28px;margin-bottom:14px}
-.why-title{font-weight:700;font-size:15px;color:var(--g1);margin-bottom:8px}
-.why-text{font-size:13.5px;color:var(--ink-m);line-height:1.6}
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 6vw, 68px);
+      font-weight: 700;
+      color: white;
+      line-height: 1.06;
+      margin-bottom: 14px;
+    }
 
-/* CTA banner */
-.cta-banner{
-  background:linear-gradient(135deg,var(--g2) 0%,var(--g3) 100%);
-  padding:64px 24px;text-align:center;
-}
-.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,40px);font-weight:700;color:white;margin-bottom:12px}
-.cta-sub{font-size:15px;color:rgba(255,255,255,.7);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto}
-.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .hero-title em {
+      color: var(--g5);
+      font-style: italic
+    }
 
-/* ═══════════════════════════════════════════════════════
+    .hero-desc {
+      font-size: 16px;
+      color: rgba(255, 255, 255, .72);
+      line-height: 1.72;
+      margin-bottom: 32px;
+      max-width: 520px
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+
+    /* Hero right card */
+    .hero-card {
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 20px;
+      padding: 32px;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      color: #a8d5b5;
+      font-weight: 600;
+      margin-bottom: 20px
+    }
+
+    .hero-pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 14px
+    }
+
+    .pillar {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px
+    }
+
+    .pillar-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      flex-shrink: 0;
+      background: rgba(255, 255, 255, .08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+    }
+
+    .pillar-text {
+      font-size: 13.5px;
+      color: rgba(255, 255, 255, .75);
+      line-height: 1.5
+    }
+
+    .pillar-text strong {
+      color: white;
+      display: block;
+      font-size: 14px;
+      margin-bottom: 2px
+    }
+
+    /* Mission section */
+    .mission-section {
+      background: var(--ivory);
+      padding: 88px 24px
+    }
+
+    .mission-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start
+    }
+
+    @media(max-width:820px) {
+      .mission-inner {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .mission-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 3vw, 34px);
+      font-style: italic;
+      font-weight: 600;
+      color: var(--g1);
+      line-height: 1.3;
+      border-left: 4px solid var(--g4);
+      padding-left: 24px;
+      margin-bottom: 28px;
+    }
+
+    .mission-text {
+      font-size: 15.5px;
+      color: var(--ink-m);
+      line-height: 1.72;
+      margin-bottom: 16px
+    }
+
+    /* Three pillars */
+    .pillars-dark {
+      background: var(--g1);
+      padding: 80px 24px
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2px;
+      margin-top: 44px
+    }
+
+    .pillar-card {
+      background: rgba(255, 255, 255, .04);
+      padding: 36px 28px;
+      border: 1px solid rgba(255, 255, 255, .07);
+      transition: all .25s
+    }
+
+    .pillar-card:hover {
+      background: rgba(255, 255, 255, .08)
+    }
+
+    .pillar-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 52px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, .08);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .pillar-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 10px
+    }
+
+    .pillar-body {
+      font-size: 13.5px;
+      color: rgba(255, 255, 255, .55);
+      line-height: 1.65
+    }
+
+    /* Why different */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 40px
+    }
+
+    .why-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 26px;
+      transition: all .25s;
+    }
+
+    .why-card:hover {
+      border-color: var(--g4);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow)
+    }
+
+    .why-icon {
+      font-size: 28px;
+      margin-bottom: 14px
+    }
+
+    .why-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--g1);
+      margin-bottom: 8px
+    }
+
+    .why-text {
+      font-size: 13.5px;
+      color: var(--ink-m);
+      line-height: 1.6
+    }
+
+    /* CTA banner */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--g2) 0%, var(--g3) 100%);
+      padding: 64px 24px;
+      text-align: center;
+    }
+
+    .cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 700;
+      color: white;
+      margin-bottom: 12px
+    }
+
+    .cta-sub {
+      font-size: 15px;
+      color: rgba(255, 255, 255, .7);
+      margin-bottom: 32px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto
+    }
+
+    .cta-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap
+    }
+
+    /* ═══════════════════════════════════════════════════════
    COURSES PAGE
 ═══════════════════════════════════════════════════════ */
-.courses-hero{background:var(--g1);padding:56px 24px 44px;position:relative;overflow:hidden}
-.courses-hero-inner{max-width:1080px;margin:0 auto;position:relative;z-index:1}
-.courses-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,5vw,52px);font-weight:700;color:white;margin-bottom:8px;line-height:1.1}
-.courses-hero p{font-size:15px;color:rgba(255,255,255,.6);max-width:560px}
+    .courses-hero {
+      background: var(--g1);
+      padding: 56px 24px 44px;
+      position: relative;
+      overflow: hidden
+    }
 
-/* Course catalogue */
-.catalogue{padding:56px 24px}
-.catalogue-inner{max-width:1080px;margin:0 auto}
-.catalogue-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:40px}
-.filter-chip{
-  padding:7px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;
-  border:1.5px solid var(--border);background:white;color:var(--ink-l);transition:all .2s;
-}
-.filter-chip.active,.filter-chip:hover{border-color:var(--g3);background:var(--g-pale);color:var(--g3)}
-.courses-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:28px}
+    .courses-hero-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1
+    }
 
-/* Course card */
-.course-card{
-  background:white;border:1px solid var(--border);border-radius:18px;
-  overflow:hidden;box-shadow:var(--shadow);transition:all .28s;
-  display:flex;flex-direction:column;
-}
-.course-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:var(--g4)}
-.course-card-banner{
-  height:8px;background:linear-gradient(90deg,var(--g2),var(--g4));
-}
-.course-card-banner.teal{background:linear-gradient(90deg,var(--teal),#2e9e9e)}
-.course-card-banner.blue{background:linear-gradient(90deg,var(--blue),#2e6bab)}
-.course-card-body{padding:26px;flex:1;display:flex;flex-direction:column}
-.course-status{
-  display:inline-flex;align-items:center;gap:6px;
-  font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  padding:4px 10px;border-radius:12px;margin-bottom:16px;width:fit-content;
-}
-.status-open{background:var(--g-light);color:var(--g3)}
-.status-open::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--g4);animation:pulse 1.8s infinite}
-.status-coming{background:var(--gold-l);color:var(--earth)}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.course-card-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--g1);line-height:1.2;margin-bottom:8px}
-.course-card-subtitle{font-size:13px;color:var(--ink-l);font-style:italic;margin-bottom:16px}
-.course-card-desc{font-size:13.5px;color:var(--ink-m);line-height:1.62;margin-bottom:20px;flex:1}
-.course-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
-.course-tag{
-  font-size:11px;font-weight:600;padding:4px 10px;border-radius:8px;
-  background:var(--g-pale);color:var(--g3);border:1px solid var(--border);
-}
-.course-meta-row{
-  display:grid;grid-template-columns:1fr 1fr;gap:8px;
-  padding:14px;background:var(--gray);border-radius:10px;margin-bottom:20px;
-}
-.course-meta-item{}
-.course-meta-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-l);margin-bottom:2px}
-.course-meta-value{font-size:13px;font-weight:600;color:var(--ink)}
-.course-price-row{display:flex;align-items:center;gap:10px;margin-bottom:20px}
-.price-early{
-  font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--earth);
-}
-.price-badge{
-  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
-  padding:3px 8px;border-radius:8px;background:var(--gold-l);color:var(--earth);
-}
-.price-full{font-size:13px;color:var(--ink-l)}
-.course-card-actions{display:flex;gap:8px;flex-wrap:wrap}
-.course-card-actions .btn{flex:1;justify-content:center;min-width:100px}
+    .courses-hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(30px, 5vw, 52px);
+      font-weight: 700;
+      color: white;
+      margin-bottom: 8px;
+      line-height: 1.1
+    }
 
-/* Course detail panel (modal-like) */
-.course-detail-overlay{
-  display:none;position:fixed;inset:0;z-index:300;
-  background:rgba(13,43,26,.6);backdrop-filter:blur(6px);
-  overflow-y:auto;
-}
-.course-detail-overlay.open{display:flex;align-items:flex-start;justify-content:center;padding:80px 16px 40px}
-.course-detail-panel{
-  background:white;border-radius:20px;width:100%;max-width:780px;
-  overflow:hidden;box-shadow:0 20px 80px rgba(0,0,0,.3);
-  animation:slideUp .32s ease;
-}
-@keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-.panel-header{background:var(--g2);padding:32px 36px;position:relative}
-.panel-close{
-  position:absolute;top:20px;right:20px;
-  width:36px;height:36px;border-radius:50%;
-  background:rgba(255,255,255,.12);border:none;cursor:pointer;
-  color:white;font-size:18px;display:flex;align-items:center;justify-content:center;
-  transition:all .2s;
-}
-.panel-close:hover{background:rgba(255,255,255,.25)}
-.panel-body{padding:36px}
-.panel-section{margin-bottom:32px}
-.panel-section-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--g1);margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--g-light)}
-.outcome-list{list-style:none;display:flex;flex-direction:column;gap:8px}
-.outcome-list li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--ink-m)}
-.outcome-list li::before{content:'✓';color:var(--g4);font-weight:700;flex-shrink:0}
-.week-list{display:flex;flex-direction:column;gap:4px}
-.week-item{display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:8px;font-size:13px}
-.week-item:nth-child(odd){background:var(--g-pale)}
-.week-item.bonus{background:var(--g-light);font-weight:600;color:var(--g1)}
-.wk-num{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;color:var(--g4);width:28px;flex-shrink:0}
-.panel-instructor{display:flex;align-items:flex-start;gap:16px;background:var(--g-pale);border-radius:12px;padding:20px}
-.inst-avatar{width:52px;height:52px;border-radius:12px;flex-shrink:0;background:linear-gradient(135deg,var(--g3),var(--g5));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:white}
-.inst-name{font-weight:700;font-size:15px;color:var(--g1);margin-bottom:2px}
-.inst-role{font-size:12.5px;color:var(--ink-l);margin-bottom:8px}
-.inst-bio{font-size:13px;color:var(--ink-m);line-height:1.6}
-.inst-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.inst-tag{font-size:11px;padding:3px 9px;border-radius:8px;background:var(--g-light);color:var(--g3);font-weight:600}
-.panel-footer{padding:24px 36px;background:var(--gray);border-top:1px solid var(--border);display:flex;gap:12px;flex-wrap:wrap}
+    .courses-hero p {
+      font-size: 15px;
+      color: rgba(255, 255, 255, .6);
+      max-width: 560px
+    }
 
-/* Coming soon card */
-.coming-card{
-  background:var(--gray);border:2px dashed var(--border);border-radius:18px;
-  padding:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;min-height:320px;
-}
-.coming-icon{font-size:40px;margin-bottom:16px;opacity:.4}
-.coming-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--ink-l);margin-bottom:8px}
-.coming-text{font-size:13.5px;color:var(--ink-l)}
+    /* Course catalogue */
+    .catalogue {
+      padding: 56px 24px
+    }
 
-/* ═══════════════════════════════════════════════════════
+    .catalogue-inner {
+      max-width: 1080px;
+      margin: 0 auto
+    }
+
+    .catalogue-filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 40px
+    }
+
+    .filter-chip {
+      padding: 7px 18px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1.5px solid var(--border);
+      background: white;
+      color: var(--ink-l);
+      transition: all .2s;
+    }
+
+    .filter-chip.active,
+    .filter-chip:hover {
+      border-color: var(--g3);
+      background: var(--g-pale);
+      color: var(--g3)
+    }
+
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 28px
+    }
+
+    /* Course card */
+    .course-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all .28s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .course-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--g4)
+    }
+
+    .course-card-banner {
+      height: 8px;
+      background: linear-gradient(90deg, var(--g2), var(--g4));
+    }
+
+    .course-card-banner.teal {
+      background: linear-gradient(90deg, var(--teal), #2e9e9e)
+    }
+
+    .course-card-banner.blue {
+      background: linear-gradient(90deg, var(--blue), #2e6bab)
+    }
+
+    .course-card-body {
+      padding: 26px;
+      flex: 1;
+      display: flex;
+      flex-direction: column
+    }
+
+    .course-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      width: fit-content;
+    }
+
+    .status-open {
+      background: var(--g-light);
+      color: var(--g3)
+    }
+
+    .status-open::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--g4);
+      animation: pulse 1.8s infinite
+    }
+
+    .status-coming {
+      background: var(--gold-l);
+      color: var(--earth)
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .4
+      }
+    }
+
+    .course-card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--g1);
+      line-height: 1.2;
+      margin-bottom: 8px
+    }
+
+    .course-card-subtitle {
+      font-size: 13px;
+      color: var(--ink-l);
+      font-style: italic;
+      margin-bottom: 16px
+    }
+
+    .course-card-desc {
+      font-size: 13.5px;
+      color: var(--ink-m);
+      line-height: 1.62;
+      margin-bottom: 20px;
+      flex: 1
+    }
+
+    .course-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 20px
+    }
+
+    .course-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: var(--g-pale);
+      color: var(--g3);
+      border: 1px solid var(--border);
+    }
+
+    .course-meta-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 14px;
+      background: var(--gray);
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+
+    .course-meta-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--ink-l);
+      margin-bottom: 2px
+    }
+
+    .course-meta-value {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink)
+    }
+
+    .course-price-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px
+    }
+
+    .price-early {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--earth);
+    }
+
+    .price-badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      padding: 3px 8px;
+      border-radius: 8px;
+      background: var(--gold-l);
+      color: var(--earth);
+    }
+
+    .price-full {
+      font-size: 13px;
+      color: var(--ink-l)
+    }
+
+    .course-card-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .course-card-actions .btn {
+      flex: 1;
+      justify-content: center;
+      min-width: 100px
+    }
+
+    /* Course detail panel (modal-like) */
+    .course-detail-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(13, 43, 26, .6);
+      backdrop-filter: blur(6px);
+      overflow-y: auto;
+    }
+
+    .course-detail-overlay.open {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 80px 16px 40px
+    }
+
+    .course-detail-panel {
+      background: white;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 780px;
+      overflow: hidden;
+      box-shadow: 0 20px 80px rgba(0, 0, 0, .3);
+      animation: slideUp .32s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .panel-header {
+      background: var(--g2);
+      padding: 32px 36px;
+      position: relative
+    }
+
+    .panel-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .12);
+      border: none;
+      cursor: pointer;
+      color: white;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+    }
+
+    .panel-close:hover {
+      background: rgba(255, 255, 255, .25)
+    }
+
+    .panel-body {
+      padding: 36px
+    }
+
+    .panel-section {
+      margin-bottom: 32px
+    }
+
+    .panel-section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--g1);
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--g-light)
+    }
+
+    .outcome-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px
+    }
+
+    .outcome-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--ink-m)
+    }
+
+    .outcome-list li::before {
+      content: '✓';
+      color: var(--g4);
+      font-weight: 700;
+      flex-shrink: 0
+    }
+
+    .week-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px
+    }
+
+    .week-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px
+    }
+
+    .week-item:nth-child(odd) {
+      background: var(--g-pale)
+    }
+
+    .week-item.bonus {
+      background: var(--g-light);
+      font-weight: 600;
+      color: var(--g1)
+    }
+
+    .wk-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--g4);
+      width: 28px;
+      flex-shrink: 0
+    }
+
+    .panel-instructor {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: var(--g-pale);
+      border-radius: 12px;
+      padding: 20px
+    }
+
+    .inst-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, var(--g3), var(--g5));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: white
+    }
+
+    .inst-name {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--g1);
+      margin-bottom: 2px
+    }
+
+    .inst-role {
+      font-size: 12.5px;
+      color: var(--ink-l);
+      margin-bottom: 8px
+    }
+
+    .inst-bio {
+      font-size: 13px;
+      color: var(--ink-m);
+      line-height: 1.6
+    }
+
+    .inst-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px
+    }
+
+    .inst-tag {
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 8px;
+      background: var(--g-light);
+      color: var(--g3);
+      font-weight: 600
+    }
+
+    .panel-footer {
+      padding: 24px 36px;
+      background: var(--gray);
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+
+    /* Coming soon card */
+    .coming-card {
+      background: var(--gray);
+      border: 2px dashed var(--border);
+      border-radius: 18px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      min-height: 320px;
+    }
+
+    .coming-icon {
+      font-size: 40px;
+      margin-bottom: 16px;
+      opacity: .4
+    }
+
+    .coming-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--ink-l);
+      margin-bottom: 8px
+    }
+
+    .coming-text {
+      font-size: 13.5px;
+      color: var(--ink-l)
+    }
+
+    /* ═══════════════════════════════════════════════════════
    REGISTER PAGE (redirect note)
 ═══════════════════════════════════════════════════════ */
-.reg-page{padding:80px 24px;text-align:center}
-.reg-page-inner{max-width:520px;margin:0 auto}
+    .reg-page {
+      padding: 80px 24px;
+      text-align: center
+    }
 
-/* ═══════════════════════════════════════════════════════
+    .reg-page-inner {
+      max-width: 520px;
+      margin: 0 auto
+    }
+
+    /* ═══════════════════════════════════════════════════════
    ABOUT PAGE
 ═══════════════════════════════════════════════════════ */
-.about-hero{background:var(--g1);padding:72px 24px 56px;position:relative;overflow:hidden}
-.about-hero-inner{max-width:1080px;margin:0 auto;position:relative;z-index:1}
-.about-hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5.5vw,60px);font-weight:700;color:white;line-height:1.08;margin-bottom:16px}
-.about-hero-title em{color:var(--g5);font-style:italic}
-.about-hero-body{font-size:16px;color:rgba(255,255,255,.68);line-height:1.72;max-width:660px}
+    .about-hero {
+      background: var(--g1);
+      padding: 72px 24px 56px;
+      position: relative;
+      overflow: hidden
+    }
 
-/* Story section */
-.story-section{padding:88px 24px;background:var(--ivory)}
-.story-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
-@media(max-width:820px){.story-inner{grid-template-columns:1fr}}
-.story-pullquote{
-  font-family:'Cormorant Garamond',serif;font-size:clamp(20px,2.8vw,30px);
-  font-weight:600;font-style:italic;color:var(--g1);line-height:1.35;
-  border-left:4px solid var(--g4);padding-left:22px;margin-bottom:28px;
-}
-.story-text{font-size:15.5px;color:var(--ink-m);line-height:1.75;margin-bottom:16px}
-.story-highlight{
-  background:var(--g-pale);border:1px solid var(--border);border-radius:12px;
-  padding:20px 24px;margin-top:24px;
-}
-.story-highlight-title{font-weight:700;font-size:14px;color:var(--g1);margin-bottom:8px}
-.story-highlight-text{font-size:13.5px;color:var(--ink-m);line-height:1.6}
+    .about-hero-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1
+    }
 
-/* Philosophy cards */
-.philosophy-section{background:var(--g2);padding:80px 24px}
-.philosophy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;margin-top:44px;border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden}
-.philosophy-card{
-  padding:36px 28px;border-right:1px solid rgba(255,255,255,.1);
-  border-bottom:1px solid rgba(255,255,255,.07);
-  transition:background .25s;
-}
-.philosophy-card:hover{background:rgba(255,255,255,.06)}
-.philosophy-card:last-child{border-right:none}
-.philo-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:700;color:rgba(255,255,255,.07);margin-bottom:12px;line-height:1}
-.philo-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:white;margin-bottom:10px}
-.philo-text{font-size:13px;color:rgba(255,255,255,.5);line-height:1.65}
+    .about-hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 5.5vw, 60px);
+      font-weight: 700;
+      color: white;
+      line-height: 1.08;
+      margin-bottom: 16px
+    }
 
-/* Who is this for */
-.audience-section{padding:80px 24px;background:var(--ivory)}
-.audience-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:32px}
-.audience-card{background:white;border:1px solid var(--border);border-radius:14px;padding:24px;transition:all .25s}
-.audience-card:hover{border-color:var(--g4);box-shadow:var(--shadow)}
-.audience-icon{font-size:28px;margin-bottom:12px}
-.audience-title{font-weight:700;font-size:14.5px;color:var(--g1);margin-bottom:6px}
-.audience-text{font-size:13px;color:var(--ink-m);line-height:1.58}
+    .about-hero-title em {
+      color: var(--g5);
+      font-style: italic
+    }
 
-/* Founder */
-.founder-section{background:var(--g-pale);padding:80px 24px}
-.founder-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:280px 1fr;gap:56px;align-items:start}
-@media(max-width:820px){.founder-inner{grid-template-columns:1fr}}
-.founder-card{background:white;border:1px solid var(--border);border-radius:18px;padding:28px;box-shadow:var(--shadow)}
-.founder-avatar{
-  width:72px;height:72px;border-radius:16px;
-  background:linear-gradient(135deg,var(--g2),var(--g4));
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:white;
-  margin-bottom:16px;
-}
-.founder-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--g1);margin-bottom:4px}
-.founder-role{font-size:13px;color:var(--ink-l);margin-bottom:16px}
-.founder-links{display:flex;flex-direction:column;gap:8px}
-.founder-link{
-  display:flex;align-items:center;gap:8px;font-size:13px;color:var(--g3);
-  text-decoration:none;font-weight:600;
-}
-.founder-link:hover{color:var(--g1)}
-.founder-right{}
-.founder-bio{font-size:15.5px;color:var(--ink-m);line-height:1.75;margin-bottom:20px}
-.founder-facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
-.fact-item{background:white;border:1px solid var(--border);border-radius:10px;padding:14px 16px}
-.fact-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-l);margin-bottom:4px}
-.fact-value{font-size:13.5px;font-weight:600;color:var(--g1)}
+    .about-hero-body {
+      font-size: 16px;
+      color: rgba(255, 255, 255, .68);
+      line-height: 1.72;
+      max-width: 660px
+    }
 
-/* ── FOOTER ── */
-footer{background:var(--g1);padding:48px 24px;color:rgba(255,255,255,.5)}
-.footer-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:start}
-@media(max-width:600px){.footer-inner{grid-template-columns:1fr}}
-.footer-brand-name{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:white;margin-bottom:6px}
-.footer-brand-tag{font-size:13px;margin-bottom:20px}
-.footer-nav{display:flex;gap:6px;flex-wrap:wrap}
-.footer-nav-link{
-  font-size:13px;font-weight:500;color:rgba(255,255,255,.55);
-  cursor:pointer;padding:4px 10px;border-radius:6px;
-  transition:color .2s;background:none;border:none;font-family:'Jost',sans-serif;
-}
-.footer-nav-link:hover{color:white}
-.footer-copy{font-size:12px;opacity:.5;margin-top:20px}
-.footer-social{display:flex;flex-direction:column;gap:10px;align-items:flex-end}
-.social-link{
-  font-size:13px;font-weight:600;color:var(--g5);text-decoration:none;
-  display:flex;align-items:center;gap:6px;
-}
-.social-link:hover{color:white}
-</style>
+    /* Story section */
+    .story-section {
+      padding: 88px 24px;
+      background: var(--ivory)
+    }
+
+    .story-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: start
+    }
+
+    @media(max-width:820px) {
+      .story-inner {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .story-pullquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(20px, 2.8vw, 30px);
+      font-weight: 600;
+      font-style: italic;
+      color: var(--g1);
+      line-height: 1.35;
+      border-left: 4px solid var(--g4);
+      padding-left: 22px;
+      margin-bottom: 28px;
+    }
+
+    .story-text {
+      font-size: 15.5px;
+      color: var(--ink-m);
+      line-height: 1.75;
+      margin-bottom: 16px
+    }
+
+    .story-highlight {
+      background: var(--g-pale);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-top: 24px;
+    }
+
+    .story-highlight-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--g1);
+      margin-bottom: 8px
+    }
+
+    .story-highlight-text {
+      font-size: 13.5px;
+      color: var(--ink-m);
+      line-height: 1.6
+    }
+
+    /* Philosophy cards */
+    .philosophy-section {
+      background: var(--g2);
+      padding: 80px 24px
+    }
+
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0;
+      margin-top: 44px;
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 16px;
+      overflow: hidden
+    }
+
+    .philosophy-card {
+      padding: 36px 28px;
+      border-right: 1px solid rgba(255, 255, 255, .1);
+      border-bottom: 1px solid rgba(255, 255, 255, .07);
+      transition: background .25s;
+    }
+
+    .philosophy-card:hover {
+      background: rgba(255, 255, 255, .06)
+    }
+
+    .philosophy-card:last-child {
+      border-right: none
+    }
+
+    .philo-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, .07);
+      margin-bottom: 12px;
+      line-height: 1
+    }
+
+    .philo-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 10px
+    }
+
+    .philo-text {
+      font-size: 13px;
+      color: rgba(255, 255, 255, .5);
+      line-height: 1.65
+    }
+
+    /* Who is this for */
+    .audience-section {
+      padding: 80px 24px;
+      background: var(--ivory)
+    }
+
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 32px
+    }
+
+    .audience-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      transition: all .25s
+    }
+
+    .audience-card:hover {
+      border-color: var(--g4);
+      box-shadow: var(--shadow)
+    }
+
+    .audience-icon {
+      font-size: 28px;
+      margin-bottom: 12px
+    }
+
+    .audience-title {
+      font-weight: 700;
+      font-size: 14.5px;
+      color: var(--g1);
+      margin-bottom: 6px
+    }
+
+    .audience-text {
+      font-size: 13px;
+      color: var(--ink-m);
+      line-height: 1.58
+    }
+
+    /* Founder */
+    .founder-section {
+      background: var(--g-pale);
+      padding: 80px 24px
+    }
+
+    .founder-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 56px;
+      align-items: start
+    }
+
+    @media(max-width:820px) {
+      .founder-inner {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .founder-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: var(--shadow)
+    }
+
+    .founder-avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--g2), var(--g4));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 16px;
+    }
+
+    .founder-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--g1);
+      margin-bottom: 4px
+    }
+
+    .founder-role {
+      font-size: 13px;
+      color: var(--ink-l);
+      margin-bottom: 16px
+    }
+
+    .founder-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px
+    }
+
+    .founder-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--g3);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .founder-link:hover {
+      color: var(--g1)
+    }
+
+
+    .founder-bio {
+      font-size: 15.5px;
+      color: var(--ink-m);
+      line-height: 1.75;
+      margin-bottom: 20px
+    }
+
+    .founder-facts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 20px
+    }
+
+    .fact-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px
+    }
+
+    .fact-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--ink-l);
+      margin-bottom: 4px
+    }
+
+    .fact-value {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--g1)
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--g1);
+      padding: 48px 24px;
+      color: rgba(255, 255, 255, .5)
+    }
+
+    .footer-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: start
+    }
+
+    @media(max-width:600px) {
+      .footer-inner {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .footer-brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 6px
+    }
+
+    .footer-brand-tag {
+      font-size: 13px;
+      margin-bottom: 20px
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap
+    }
+
+    .footer-nav-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255, 255, 255, .55);
+      cursor: pointer;
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: color .2s;
+      background: none;
+      border: none;
+      font-family: 'Jost', sans-serif;
+    }
+
+    .footer-nav-link:hover {
+      color: white
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      opacity: .5;
+      margin-top: 20px
+    }
+
+    .footer-social {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-end
+    }
+
+    .social-link {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--g5);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .social-link:hover {
+      color: white
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- ── NAV ── -->
-<nav>
-  <div class="nav-brand" onclick="showPage('home')">
-    <div class="nav-logo">🏝</div>
-    <span class="nav-name">The Island GIS</span>
-  </div>
-  <div class="nav-links">
-    <button class="nav-link active" onclick="showPage('home')">Home</button>
-    <button class="nav-link" onclick="showPage('courses')">Courses</button>
-    <button class="nav-link" onclick="showPage('about')">About</button>
-  </div>
-  <button class="nav-cta" onclick="openPanel('rs-panel')">Enrol Now</button>
-</nav>
+  <!-- ── NAV ── -->
+  <nav>
+    <div class="nav-brand" onclick="showPage('home')">
+      <div class="nav-logo">🏝</div>
+      <span class="nav-name">The Island GIS</span>
+    </div>
+    <div class="nav-links">
+      <button class="nav-link active" onclick="showPage('home')">Home</button>
+      <button class="nav-link" onclick="showPage('courses')">Courses</button>
+      <button class="nav-link" onclick="showPage('about')">About</button>
+    </div>
+    <button class="nav-cta" onclick="openPanel('rs-panel')">Enrol Now</button>
+  </nav>
 
-<!-- ════════════════════════════════════════════
+  <!-- ════════════════════════════════════════════
   PAGE: HOME
 ════════════════════════════════════════════ -->
-<div class="page active" id="page-home">
+  <div class="page active" id="page-home">
 
-  <!-- Hero -->
-  <div class="home-hero">
-    <div class="topo">
-      <svg viewBox="0 0 1400 700" xmlns="http://www.w3.org/2000/svg">
-        <g fill="none" stroke="white" stroke-width="1">
-          <ellipse cx="700" cy="350" rx="650" ry="300"/><ellipse cx="700" cy="350" rx="570" ry="254"/>
-          <ellipse cx="700" cy="350" rx="490" ry="210"/><ellipse cx="700" cy="350" rx="410" ry="170"/>
-          <ellipse cx="700" cy="350" rx="330" ry="130"/><ellipse cx="700" cy="350" rx="250" ry="94"/>
-          <ellipse cx="700" cy="350" rx="170" ry="62"/><ellipse cx="700" cy="350" rx="90" ry="34"/>
-          <ellipse cx="150" cy="100" rx="200" ry="100"/><ellipse cx="150" cy="100" rx="150" ry="72"/>
-          <ellipse cx="150" cy="100" rx="100" ry="46"/><ellipse cx="150" cy="100" rx="50" ry="24"/>
-          <ellipse cx="1250" cy="580" rx="220" ry="110"/><ellipse cx="1250" cy="580" rx="160" ry="78"/>
-          <ellipse cx="1250" cy="580" rx="100" ry="48"/>
-          <ellipse cx="1100" cy="80" rx="180" ry="90"/><ellipse cx="1100" cy="80" rx="120" ry="58"/>
-        </g>
-      </svg>
-    </div>
-    <div class="home-hero-inner">
-      <div>
-        <div class="hero-eyebrow">🇰🇭 Geospatial Education · Cambodia</div>
-        <h1 class="hero-title">From Traditional GIS<br>to <em>Modern</em> Geospatial</h1>
-        <p class="hero-desc">The Island GIS is a Cambodian education platform that helps GIS learners move beyond desktop tools into Python, Google Earth Engine, and AI-assisted analysis — at a price that makes it accessible to everyone.</p>
-        <div class="hero-btns">
-          <button class="btn btn-green" onclick="showPage('courses')">Browse Courses →</button>
-          <button class="btn btn-outline-white" onclick="showPage('about')">Our Mission</button>
-        </div>
+    <!-- Hero -->
+    <div class="home-hero">
+      <div class="topo">
+        <svg viewBox="0 0 1400 700" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none" stroke="white" stroke-width="1">
+            <ellipse cx="700" cy="350" rx="650" ry="300" />
+            <ellipse cx="700" cy="350" rx="570" ry="254" />
+            <ellipse cx="700" cy="350" rx="490" ry="210" />
+            <ellipse cx="700" cy="350" rx="410" ry="170" />
+            <ellipse cx="700" cy="350" rx="330" ry="130" />
+            <ellipse cx="700" cy="350" rx="250" ry="94" />
+            <ellipse cx="700" cy="350" rx="170" ry="62" />
+            <ellipse cx="700" cy="350" rx="90" ry="34" />
+            <ellipse cx="150" cy="100" rx="200" ry="100" />
+            <ellipse cx="150" cy="100" rx="150" ry="72" />
+            <ellipse cx="150" cy="100" rx="100" ry="46" />
+            <ellipse cx="150" cy="100" rx="50" ry="24" />
+            <ellipse cx="1250" cy="580" rx="220" ry="110" />
+            <ellipse cx="1250" cy="580" rx="160" ry="78" />
+            <ellipse cx="1250" cy="580" rx="100" ry="48" />
+            <ellipse cx="1100" cy="80" rx="180" ry="90" />
+            <ellipse cx="1100" cy="80" rx="120" ry="58" />
+          </g>
+        </svg>
       </div>
-      <div class="hero-card">
-        <div class="hero-card-title">What we teach differently</div>
-        <div class="hero-pillars">
-          <div class="pillar">
-            <div class="pillar-icon">🗺</div>
-            <div class="pillar-text"><strong>Modern GIS Skills</strong>Python, Google Earth Engine, cloud analysis — the tools employers and researchers actually use</div>
-          </div>
-          <div class="pillar">
-            <div class="pillar-icon">🧠</div>
-            <div class="pillar-text"><strong>How to Learn</strong>Not just what to click — we teach you how to think spatially, debug independently, and keep growing after the course</div>
-          </div>
-          <div class="pillar">
-            <div class="pillar-icon">🔬</div>
-            <div class="pillar-text"><strong>How to Research</strong>Frame a research question, choose methods, and produce outputs you can publish or show to employers</div>
-          </div>
-          <div class="pillar">
-            <div class="pillar-icon">🤖</div>
-            <div class="pillar-text"><strong>AI as a Tool</strong>Learn to use AI tools like Antigravity to accelerate your work — but only after you understand the code yourself</div>
+      <div class="home-hero-inner">
+        <div>
+          <div class="hero-eyebrow">🇰🇭 Geospatial Education · Cambodia</div>
+          <h1 class="hero-title">From Traditional GIS<br>to <em>Modern</em> Geospatial</h1>
+          <p class="hero-desc">The Island GIS is a Cambodian education platform that helps GIS learners move beyond
+            desktop tools into Python, Google Earth Engine, and AI-assisted analysis — at a price that makes it
+            accessible to everyone.</p>
+          <div class="hero-btns">
+            <button class="btn btn-green" onclick="showPage('courses')">Browse Courses →</button>
+            <button class="btn btn-outline-white" onclick="showPage('about')">Our Mission</button>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Mission -->
-  <div class="mission-section">
-    <div class="mission-inner">
-      <div>
-        <div class="s-label">Our Mission</div>
-        <div class="mission-quote">"Making professional geospatial skills accessible to every Cambodian learner — at an affordable price."</div>
-        <p class="mission-text">GIS education in Cambodia has traditionally been limited to expensive software, desktop workflows, and a handful of institutions. The Island GIS was created to change that — to give Cambodian students and professionals access to the same tools and methods used by researchers and geospatial engineers globally.</p>
-        <p class="mission-text">We believe the gap between a Cambodian GIS student and a global geospatial professional is not talent. It is access, language, and the right kind of teaching.</p>
-        <button class="btn btn-outline-green" onclick="showPage('about')" style="margin-top:8px">Read our full story →</button>
-      </div>
-      <div>
-        <div class="s-label">Three Commitments</div>
-        <div class="s-title" style="font-size:28px;margin-bottom:24px">What we promise every student</div>
-        <div style="display:flex;flex-direction:column;gap:16px">
-          <div style="background:white;border:1px solid var(--border);border-radius:12px;padding:20px 22px;border-left:4px solid var(--g4)">
-            <div style="font-weight:700;font-size:14px;color:var(--g1);margin-bottom:5px">Affordable · Always</div>
-            <div style="font-size:13.5px;color:var(--ink-m);line-height:1.6">Priced for Cambodian salaries, not international ones. Early bird discounts and small cohorts keep quality high without making it exclusive.</div>
-          </div>
-          <div style="background:white;border:1px solid var(--border);border-radius:12px;padding:20px 22px;border-left:4px solid var(--g4)">
-            <div style="font-weight:700;font-size:14px;color:var(--g1);margin-bottom:5px">Taught in Khmer</div>
-            <div style="font-size:13.5px;color:var(--ink-m);line-height:1.6">Every live session is in Khmer with English technical terms. Complex ideas are easier to grasp in your first language — and that matters when the concepts are hard.</div>
-          </div>
-          <div style="background:white;border:1px solid var(--border);border-radius:12px;padding:20px 22px;border-left:4px solid var(--g4)">
-            <div style="font-weight:700;font-size:14px;color:var(--g1);margin-bottom:5px">Practical & Verifiable</div>
-            <div style="font-size:13.5px;color:var(--ink-m);line-height:1.6">No paper certificates. You leave with a GitHub portfolio, a live web app, and a project employers and research supervisors can open and read themselves.</div>
+        <div class="hero-card">
+          <div class="hero-card-title">What we teach differently</div>
+          <div class="hero-pillars">
+            <div class="pillar">
+              <div class="pillar-icon">🗺</div>
+              <div class="pillar-text"><strong>Modern GIS Skills</strong>Python, Google Earth Engine, cloud analysis —
+                the tools employers and researchers actually use</div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-icon">🧠</div>
+              <div class="pillar-text"><strong>How to Learn</strong>Not just what to click — we teach you how to think
+                spatially, debug independently, and keep growing after the course</div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-icon">🔬</div>
+              <div class="pillar-text"><strong>How to Research</strong>Frame a research question, choose methods, and
+                produce outputs you can publish or show to employers</div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-icon">🤖</div>
+              <div class="pillar-text"><strong>AI as a Tool</strong>Learn to use AI tools like Antigravity to accelerate
+                your work — but only after you understand the code yourself</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Three big ideas -->
-  <div class="pillars-dark">
-    <div class="section-inner" style="max-width:1080px;margin:0 auto">
-      <div class="s-label" style="color:var(--g5)">The Island GIS Philosophy</div>
-      <div class="s-title" style="color:white;margin-top:8px">Three ideas that shape<br>everything we teach</div>
-      <div class="pillars-grid">
-        <div class="pillar-card">
-          <div class="pillar-number">01</div>
-          <div class="pillar-title">Learn Modern, Think Spatial</div>
-          <div class="pillar-body">Traditional GIS taught you where things are. Modern geospatial analysis asks why — and how they change over time. We teach Python and GEE not as replacements for ArcGIS, but as the tools that let you answer deeper questions with the same spatial instincts you already have.</div>
+    <!-- Mission -->
+    <div class="mission-section">
+      <div class="mission-inner">
+        <div>
+          <div class="s-label">Our Mission</div>
+          <div class="mission-quote">"Making professional geospatial skills accessible to every Cambodian learner — at
+            an affordable price."</div>
+          <p class="mission-text">GIS education in Cambodia has traditionally been limited to expensive software,
+            desktop workflows, and a handful of institutions. The Island GIS was created to change that — to give
+            Cambodian students and professionals access to the same tools and methods used by researchers and geospatial
+            engineers globally.</p>
+          <p class="mission-text">We believe the gap between a Cambodian GIS student and a global geospatial
+            professional is not talent. It is access, language, and the right kind of teaching.</p>
+          <button class="btn btn-outline-green" onclick="showPage('about')" style="margin-top:8px">Read our full story
+            →</button>
         </div>
-        <div class="pillar-card">
-          <div class="pillar-number">02</div>
-          <div class="pillar-title">Teach Yourself How to Learn</div>
-          <div class="pillar-body">The geospatial field changes fast. Our job is not to give you every answer — it is to teach you how to find answers yourself. How to read documentation. How to debug your own code. How to frame a research question. Skills that outlast any single course.</div>
-        </div>
-        <div class="pillar-card">
-          <div class="pillar-number">03</div>
-          <div class="pillar-title">AI Amplifies, You Lead</div>
-          <div class="pillar-body">We live in an age of AI tools that can write code, explain concepts, and accelerate analysis. We teach you how to use them well — which means understanding the outputs, catching the errors, and knowing when the AI is wrong. You lead. AI assists.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Current course teaser -->
-  <div class="section" style="background:var(--ivory)">
-    <div class="section-inner">
-      <div class="s-label">Courses</div>
-      <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px">
-        <div class="s-title" style="margin-bottom:0">Now Open — Cohort 1</div>
-        <button class="btn btn-outline-green" onclick="showPage('courses')">All Courses →</button>
-      </div>
-      <!-- Mini course card -->
-      <div style="background:white;border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);max-width:520px">
-        <div style="height:6px;background:linear-gradient(90deg,var(--g2),var(--g4))"></div>
-        <div style="padding:26px">
-          <div class="course-status status-open">Open for Registration</div>
-          <div class="course-card-title">Remote Sensing Analysis with Python & GEE</div>
-          <div class="course-card-subtitle">A Live Applied Geospatial Cohort for Cambodia</div>
-          <div class="course-tags">
-            <span class="course-tag">Python</span><span class="course-tag">Google Earth Engine</span>
-            <span class="course-tag">LULC</span><span class="course-tag">Urban Heat Island</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
-            <span class="price-early">$100</span>
-            <span class="price-badge">Early Bird · First 10</span>
-            <span class="price-full">$120 after</span>
-          </div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <button class="btn btn-green btn-sm" onclick="openPanel('rs-panel')">Register Now</button>
-            <button class="btn btn-ghost btn-sm" onclick="showPage('courses')">Course Details</button>
+        <div>
+          <div class="s-label">Three Commitments</div>
+          <div class="s-title" style="font-size:28px;margin-bottom:24px">What we promise every student</div>
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div
+              style="background:white;border:1px solid var(--border);border-radius:12px;padding:20px 22px;border-left:4px solid var(--g4)">
+              <div style="font-weight:700;font-size:14px;color:var(--g1);margin-bottom:5px">Affordable · Always</div>
+              <div style="font-size:13.5px;color:var(--ink-m);line-height:1.6">Priced for Cambodian salaries, not
+                international ones. Early bird discounts and small cohorts keep quality high without making it
+                exclusive.</div>
+            </div>
+            <div
+              style="background:white;border:1px solid var(--border);border-radius:12px;padding:20px 22px;border-left:4px solid var(--g4)">
+              <div style="font-weight:700;font-size:14px;color:var(--g1);margin-bottom:5px">Taught in Khmer</div>
+              <div style="font-size:13.5px;color:var(--ink-m);line-height:1.6">Every live session is in Khmer with
+                English technical terms. Complex ideas are easier to grasp in your first language — and that matters
+                when the concepts are hard.</div>
+            </div>
+            <div
+              style="background:white;border:1px solid var(--border);border-radius:12px;padding:20px 22px;border-left:4px solid var(--g4)">
+              <div style="font-weight:700;font-size:14px;color:var(--g1);margin-bottom:5px">Practical & Verifiable</div>
+              <div style="font-size:13.5px;color:var(--ink-m);line-height:1.6">No paper certificates. You leave with a
+                GitHub portfolio, a live web app, and a project employers and research supervisors can open and read
+                themselves.</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- CTA -->
-  <div class="cta-banner">
-    <div class="cta-title">Ready to move beyond desktop GIS?</div>
-    <div class="cta-sub">Join the first cohort. Early bird price: $100 USD — first 10 registrations only.</div>
-    <div class="cta-btns">
-      <button class="btn btn-outline-white" onclick="showPage('about')">Our Story</button>
-      <button class="btn btn-green" onclick="openPanel('rs-panel')">Enrol — $100 Early Bird</button>
-    </div>
-  </div>
-
-  <footer><div class="footer-inner">
-    <div>
-      <div class="footer-brand-name">🏝 The Island GIS</div>
-      <div class="footer-brand-tag">Applied Geospatial Education for Cambodia</div>
-      <div class="footer-nav">
-        <button class="footer-nav-link" onclick="showPage('home')">Home</button>
-        <button class="footer-nav-link" onclick="showPage('courses')">Courses</button>
-        <button class="footer-nav-link" onclick="showPage('about')">About</button>
+    <!-- Three big ideas -->
+    <div class="pillars-dark">
+      <div class="section-inner" style="max-width:1080px;margin:0 auto">
+        <div class="s-label" style="color:var(--g5)">The Island GIS Philosophy</div>
+        <div class="s-title" style="color:white;margin-top:8px">Three ideas that shape<br>everything we teach</div>
+        <div class="pillars-grid">
+          <div class="pillar-card">
+            <div class="pillar-number">01</div>
+            <div class="pillar-title">Learn Modern, Think Spatial</div>
+            <div class="pillar-body">Traditional GIS taught you where things are. Modern geospatial analysis asks why —
+              and how they change over time. We teach Python and GEE not as replacements for ArcGIS, but as the tools
+              that let you answer deeper questions with the same spatial instincts you already have.</div>
+          </div>
+          <div class="pillar-card">
+            <div class="pillar-number">02</div>
+            <div class="pillar-title">Teach Yourself How to Learn</div>
+            <div class="pillar-body">The geospatial field changes fast. Our job is not to give you every answer — it is
+              to teach you how to find answers yourself. How to read documentation. How to debug your own code. How to
+              frame a research question. Skills that outlast any single course.</div>
+          </div>
+          <div class="pillar-card">
+            <div class="pillar-number">03</div>
+            <div class="pillar-title">AI Amplifies, You Lead</div>
+            <div class="pillar-body">We live in an age of AI tools that can write code, explain concepts, and accelerate
+              analysis. We teach you how to use them well — which means understanding the outputs, catching the errors,
+              and knowing when the AI is wrong. You lead. AI assists.</div>
+          </div>
+        </div>
       </div>
-      <div class="footer-copy">© 2026 The Island GIS · Sopheak Khim · Phnom Penh, Cambodia</div>
     </div>
-    <div class="footer-social">
-      <a class="social-link" href="https://www.facebook.com/TheIslandGIS" target="_blank">📘 Facebook</a>
-      <a class="social-link" href="https://www.linkedin.com/in/sopheak-khim/" target="_blank">💼 LinkedIn</a>
-      <a class="social-link" href="mailto:khimsopheak750@gmail.com">✉ Email</a>
-    </div>
-  </div></footer>
-</div>
 
-<!-- ════════════════════════════════════════════
-  PAGE: COURSES
-════════════════════════════════════════════ -->
-<div class="page" id="page-courses">
-
-  <div class="courses-hero">
-    <div class="topo">
-      <svg viewBox="0 0 1200 300" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="white" stroke-width="1" opacity=".1"><ellipse cx="900" cy="150" rx="380" ry="160"/><ellipse cx="900" cy="150" rx="300" ry="118"/><ellipse cx="900" cy="150" rx="220" ry="80"/><ellipse cx="200" cy="80" rx="220" ry="100"/><ellipse cx="200" cy="80" rx="160" ry="68"/></g></svg>
-    </div>
-    <div class="courses-hero-inner">
-      <div class="s-label" style="color:var(--g5)">Course Catalogue</div>
-      <h1>All Courses</h1>
-      <p>Applied geospatial training for Cambodian learners. We start with remote sensing and Python — more courses coming as the community grows.</p>
-    </div>
-  </div>
-
-  <div class="catalogue">
-    <div class="catalogue-inner">
-      <div class="catalogue-filters">
-        <div class="filter-chip active">All</div>
-        <div class="filter-chip">Remote Sensing</div>
-        <div class="filter-chip">Python & GEE</div>
-        <div class="filter-chip">Machine Learning</div>
-        <div class="filter-chip">Open Soon</div>
-      </div>
-
-      <div class="courses-grid">
-
-        <!-- Course 1: Remote Sensing -->
-        <div class="course-card">
-          <div class="course-card-banner"></div>
-          <div class="course-card-body">
+    <!-- Current course teaser -->
+    <div class="section" style="background:var(--ivory)">
+      <div class="section-inner">
+        <div class="s-label">Courses</div>
+        <div
+          style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px">
+          <div class="s-title" style="margin-bottom:0">Now Open — Cohort 1</div>
+          <button class="btn btn-outline-green" onclick="showPage('courses')">All Courses →</button>
+        </div>
+        <!-- Mini course card -->
+        <div
+          style="background:white;border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:var(--shadow);max-width:520px">
+          <div style="height:6px;background:linear-gradient(90deg,var(--g2),var(--g4))"></div>
+          <div style="padding:26px">
             <div class="course-status status-open">Open for Registration</div>
-            <div class="course-card-title">Remote Sensing Analysis with Python & Google Earth Engine</div>
+            <div class="course-card-title">Remote Sensing Analysis with Python & GEE</div>
             <div class="course-card-subtitle">A Live Applied Geospatial Cohort for Cambodia</div>
-            <div class="course-card-desc">Go from ArcGIS user to Python-powered remote sensing analyst. You will classify land cover, map Urban Heat Island intensity, detect change, and analyse 10-year time series — all in the cloud using GEE.</div>
             <div class="course-tags">
               <span class="course-tag">Python</span><span class="course-tag">Google Earth Engine</span>
-              <span class="course-tag">LULC</span><span class="course-tag">UHI</span>
-              <span class="course-tag">Change Detection</span><span class="course-tag">Time Series</span>
+              <span class="course-tag">LULC</span><span class="course-tag">Urban Heat Island</span>
             </div>
-            <div class="course-meta-row">
-              <div class="course-meta-item"><div class="course-meta-label">Duration</div><div class="course-meta-value">15 Weeks</div></div>
-              <div class="course-meta-item"><div class="course-meta-label">Total Hours</div><div class="course-meta-value">60 hrs live</div></div>
-              <div class="course-meta-item"><div class="course-meta-label">Format</div><div class="course-meta-value">Sat + Sun / Google Meet</div></div>
-              <div class="course-meta-item"><div class="course-meta-label">Cohort Size</div><div class="course-meta-value">Max 30 students</div></div>
-            </div>
-            <div class="course-price-row">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
               <span class="price-early">$100</span>
               <span class="price-badge">Early Bird · First 10</span>
-              <span class="price-full">· $120 after</span>
+              <span class="price-full">$120 after</span>
             </div>
-            <div class="course-card-actions">
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
               <button class="btn btn-green btn-sm" onclick="openPanel('rs-panel')">Register Now</button>
-              <button class="btn btn-ghost btn-sm" onclick="openDetail('rs-detail')">Course Details</button>
-              <button class="btn btn-ghost btn-sm" onclick="openDetail('rs-instructor')">Instructor</button>
+              <button class="btn btn-ghost btn-sm" onclick="showPage('courses')">Course Details</button>
             </div>
           </div>
         </div>
-
-        <!-- Coming soon 2 -->
-        <div class="coming-card">
-          <div class="coming-icon">🛰</div>
-          <div class="coming-title">Drone Mapping & Photogrammetry</div>
-          <div class="coming-text">Pix4D, Metashape, and point cloud analysis — planned for Cohort 2 after Remote Sensing course completes.</div>
-        </div>
-
-        <!-- Coming soon 3 -->
-        <div class="coming-card">
-          <div class="coming-icon">📊</div>
-          <div class="coming-title">Geospatial Data Science with Python</div>
-          <div class="coming-text">Pandas, GeoPandas, spatial statistics, and dashboard building — for analysts who want to go deeper into data pipelines.</div>
-        </div>
-
       </div>
     </div>
+
+    <!-- CTA -->
+    <div class="cta-banner">
+      <div class="cta-title">Ready to move beyond desktop GIS?</div>
+      <div class="cta-sub">Join the first cohort. Early bird price: $100 USD — first 10 registrations only.</div>
+      <div class="cta-btns">
+        <button class="btn btn-outline-white" onclick="showPage('about')">Our Story</button>
+        <button class="btn btn-green" onclick="openPanel('rs-panel')">Enrol — $100 Early Bird</button>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-inner">
+        <div>
+          <div class="footer-brand-name">🏝 The Island GIS</div>
+          <div class="footer-brand-tag">Applied Geospatial Education for Cambodia</div>
+          <div class="footer-nav">
+            <button class="footer-nav-link" onclick="showPage('home')">Home</button>
+            <button class="footer-nav-link" onclick="showPage('courses')">Courses</button>
+            <button class="footer-nav-link" onclick="showPage('about')">About</button>
+          </div>
+          <div class="footer-copy">© 2026 The Island GIS · Sopheak Khim · Phnom Penh, Cambodia</div>
+        </div>
+        <div class="footer-social">
+          <a class="social-link" href="https://www.facebook.com/share/18QuuVuXCN/" target="_blank">📘 Facebook</a>
+          <a class="social-link" href="https://www.linkedin.com/in/sopheak-khim/" target="_blank">💼 LinkedIn</a>
+          <a class="social-link" href="https://t.me/islandgis" target="_blank">💬 Telegram</a>
+          <a class="social-link" href="mailto:khimsopheak750@gmail.com">✉ Email</a>
+        </div>
+      </div>
+    </footer>
   </div>
 
-  <footer><div class="footer-inner">
-    <div>
-      <div class="footer-brand-name">🏝 The Island GIS</div>
-      <div class="footer-brand-tag">Applied Geospatial Education for Cambodia</div>
-      <div class="footer-nav">
-        <button class="footer-nav-link" onclick="showPage('home')">Home</button>
-        <button class="footer-nav-link" onclick="showPage('courses')">Courses</button>
-        <button class="footer-nav-link" onclick="showPage('about')">About</button>
-      </div>
-      <div class="footer-copy">© 2026 The Island GIS · Sopheak Khim · Phnom Penh, Cambodia</div>
-    </div>
-    <div class="footer-social">
-      <a class="social-link" href="https://www.facebook.com/TheIslandGIS" target="_blank">📘 Facebook</a>
-      <a class="social-link" href="https://www.linkedin.com/in/sopheak-khim/" target="_blank">💼 LinkedIn</a>
-    </div>
-  </div></footer>
-</div>
+  <!-- ════════════════════════════════════════════
+  PAGE: COURSES
+════════════════════════════════════════════ -->
+  <div class="page" id="page-courses">
 
-<!-- ════════════════════════════════════════════
+    <div class="courses-hero">
+      <div class="topo">
+        <svg viewBox="0 0 1200 300" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none" stroke="white" stroke-width="1" opacity=".1">
+            <ellipse cx="900" cy="150" rx="380" ry="160" />
+            <ellipse cx="900" cy="150" rx="300" ry="118" />
+            <ellipse cx="900" cy="150" rx="220" ry="80" />
+            <ellipse cx="200" cy="80" rx="220" ry="100" />
+            <ellipse cx="200" cy="80" rx="160" ry="68" />
+          </g>
+        </svg>
+      </div>
+      <div class="courses-hero-inner">
+        <div class="s-label" style="color:var(--g5)">Course Catalogue</div>
+        <h1>All Courses</h1>
+        <p>Applied geospatial training for Cambodian learners. We start with remote sensing and Python — more courses
+          coming as the community grows.</p>
+      </div>
+    </div>
+
+    <div class="catalogue">
+      <div class="catalogue-inner">
+        <div class="catalogue-filters">
+          <div class="filter-chip active">All</div>
+          <div class="filter-chip">Remote Sensing</div>
+          <div class="filter-chip">Python & GEE</div>
+          <div class="filter-chip">Machine Learning</div>
+          <div class="filter-chip">Open Soon</div>
+        </div>
+
+        <div class="courses-grid">
+
+          <!-- Course 1: Remote Sensing -->
+          <div class="course-card">
+            <div class="course-card-banner"></div>
+            <div class="course-card-body">
+              <div class="course-status status-open">Open for Registration</div>
+              <div class="course-card-title">Remote Sensing Analysis with Python & Google Earth Engine</div>
+              <div class="course-card-subtitle">A Live Applied Geospatial Cohort for Cambodia</div>
+              <div class="course-card-desc">Go from ArcGIS user to Python-powered remote sensing analyst. You will
+                classify land cover, map Urban Heat Island intensity, detect change, and analyse 10-year time series —
+                all in the cloud using GEE.</div>
+              <div class="course-tags">
+                <span class="course-tag">Python</span><span class="course-tag">Google Earth Engine</span>
+                <span class="course-tag">LULC</span><span class="course-tag">UHI</span>
+                <span class="course-tag">Change Detection</span><span class="course-tag">Time Series</span>
+              </div>
+              <div class="course-meta-row">
+                <div class="course-meta-item">
+                  <div class="course-meta-label">Duration</div>
+                  <div class="course-meta-value">15 Weeks</div>
+                </div>
+                <div class="course-meta-item">
+                  <div class="course-meta-label">Total Hours</div>
+                  <div class="course-meta-value">60 hrs live</div>
+                </div>
+                <div class="course-meta-item">
+                  <div class="course-meta-label">Format</div>
+                  <div class="course-meta-value">Sat + Sun / Google Meet</div>
+                </div>
+                <div class="course-meta-item">
+                  <div class="course-meta-label">Cohort Size</div>
+                  <div class="course-meta-value">Max 30 students</div>
+                </div>
+              </div>
+              <div class="course-price-row">
+                <span class="price-early">$100</span>
+                <span class="price-badge">Early Bird · First 10</span>
+                <span class="price-full">· $120 after</span>
+              </div>
+              <div class="course-card-actions">
+                <button class="btn btn-green btn-sm" onclick="openPanel('rs-panel')">Register Now</button>
+                <button class="btn btn-ghost btn-sm" onclick="openDetail('rs-detail')">Course Details</button>
+                <button class="btn btn-ghost btn-sm" onclick="openDetail('rs-instructor')">Instructor</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coming soon 2 -->
+          <div class="coming-card">
+            <div class="coming-icon">🛰</div>
+            <div class="coming-title">Drone Mapping & Photogrammetry</div>
+            <div class="coming-text">Pix4D, Metashape, and point cloud analysis — planned for Cohort 2 after Remote
+              Sensing course completes.</div>
+          </div>
+
+          <!-- Coming soon 3 -->
+          <div class="coming-card">
+            <div class="coming-icon">📊</div>
+            <div class="coming-title">Geospatial Data Science with Python</div>
+            <div class="coming-text">Pandas, GeoPandas, spatial statistics, and dashboard building — for analysts who
+              want to go deeper into data pipelines.</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-inner">
+        <div>
+          <div class="footer-brand-name">🏝 The Island GIS</div>
+          <div class="footer-brand-tag">Applied Geospatial Education for Cambodia</div>
+          <div class="footer-nav">
+            <button class="footer-nav-link" onclick="showPage('home')">Home</button>
+            <button class="footer-nav-link" onclick="showPage('courses')">Courses</button>
+            <button class="footer-nav-link" onclick="showPage('about')">About</button>
+          </div>
+          <div class="footer-copy">© 2026 The Island GIS · Sopheak Khim · Phnom Penh, Cambodia</div>
+        </div>
+        <div class="footer-social">
+          <a class="social-link" href="https://www.facebook.com/share/18QuuVuXCN/" target="_blank">📘 Facebook</a>
+          <a class="social-link" href="https://www.linkedin.com/in/sopheak-khim/" target="_blank">💼 LinkedIn</a>
+          <a class="social-link" href="https://t.me/islandgis" target="_blank">💬 Telegram</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ════════════════════════════════════════════
   PAGE: ABOUT
 ════════════════════════════════════════════ -->
-<div class="page" id="page-about">
+  <div class="page" id="page-about">
 
-  <!-- Hero -->
-  <div class="about-hero">
-    <div class="topo">
-      <svg viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="white" stroke-width="1" opacity=".08"><ellipse cx="300" cy="200" rx="380" ry="180"/><ellipse cx="300" cy="200" rx="300" ry="138"/><ellipse cx="300" cy="200" rx="220" ry="98"/><ellipse cx="300" cy="200" rx="140" ry="60"/><ellipse cx="1000" cy="150" rx="280" ry="140"/><ellipse cx="1000" cy="150" rx="210" ry="100"/><ellipse cx="1000" cy="150" rx="140" ry="64"/></g></svg>
-    </div>
-    <div class="about-hero-inner">
-      <div class="s-label" style="color:var(--g5)">About The Island GIS</div>
-      <h1 class="about-hero-title">Built for <em>Cambodian</em><br>GIS Learners</h1>
-      <p class="about-hero-body">The Island GIS was created with one conviction: that the gap between a Cambodian GIS student and a global geospatial professional is not talent — it is access, language, and the right kind of teaching.</p>
-    </div>
-  </div>
-
-  <!-- Story -->
-  <div class="story-section">
-    <div class="story-inner">
-      <div>
-        <div class="s-label">The Story</div>
-        <div class="story-pullquote">"GIS in Cambodia is mostly still desktop, mostly still English, and mostly still expensive."</div>
-        <p class="story-text">That observation sits at the heart of why The Island GIS exists. After working across humanitarian, government, and research sectors in Cambodia, it became clear that the tools and methods that matter most in modern geospatial work — Python, Google Earth Engine, cloud analysis, machine learning — were barely taught locally, and almost never in Khmer.</p>
-        <p class="story-text">The Island GIS was built to close that gap. Not by lowering the standard, but by making the standard achievable — through live teaching in Khmer, research-grounded content, affordable pricing, and a philosophy that puts the learner's long-term independence above short-term completion.</p>
-        <div class="story-highlight">
-          <div class="story-highlight-title">Why "The Island"?</div>
-          <div class="story-highlight-text">An island is a place you can orient yourself from. It sits in the middle of something vast — like the ocean of geospatial knowledge — and gives you a foundation to explore outward. The Island GIS is meant to be that foundation: a place you start from, not where you stay.</div>
-        </div>
+    <!-- Hero -->
+    <div class="about-hero">
+      <div class="topo">
+        <svg viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none" stroke="white" stroke-width="1" opacity=".08">
+            <ellipse cx="300" cy="200" rx="380" ry="180" />
+            <ellipse cx="300" cy="200" rx="300" ry="138" />
+            <ellipse cx="300" cy="200" rx="220" ry="98" />
+            <ellipse cx="300" cy="200" rx="140" ry="60" />
+            <ellipse cx="1000" cy="150" rx="280" ry="140" />
+            <ellipse cx="1000" cy="150" rx="210" ry="100" />
+            <ellipse cx="1000" cy="150" rx="140" ry="64" />
+          </g>
+        </svg>
       </div>
-      <div>
-        <div class="s-label">What Makes Us Different</div>
-        <div class="s-title" style="font-size:26px;margin-bottom:20px">Not just what to do — but how to think</div>
-        <div style="display:flex;flex-direction:column;gap:14px">
-          <div style="display:flex;gap:14px;align-items:flex-start">
-            <div style="width:40px;height:40px;border-radius:10px;background:var(--g-light);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🌍</div>
-            <div><div style="font-weight:700;font-size:14px;color:var(--g1);margin-bottom:3px">Traditional → Modern GIS</div><div style="font-size:13.5px;color:var(--ink-m);line-height:1.6">We meet students where they are — experienced with ArcGIS or QGIS — and build from there into Python, GEE, and cloud-scale analysis.</div></div>
+      <div class="about-hero-inner">
+        <div class="s-label" style="color:var(--g5)">About The Island GIS</div>
+        <h1 class="about-hero-title">Built for <em>Cambodian</em><br>GIS Learners</h1>
+        <p class="about-hero-body">The Island GIS was created with one conviction: that the gap between a Cambodian GIS
+          student and a global geospatial professional is not talent — it is access, language, and the right kind of
+          teaching.</p>
+      </div>
+    </div>
+
+    <!-- Story -->
+    <div class="story-section">
+      <div class="story-inner">
+        <div>
+          <div class="s-label">The Story</div>
+          <div class="story-pullquote">"GIS in Cambodia is mostly still desktop, mostly still English, and mostly still
+            expensive."</div>
+          <p class="story-text">That observation sits at the heart of why The Island GIS exists. After working across
+            humanitarian, government, and research sectors in Cambodia, it became clear that the tools and methods that
+            matter most in modern geospatial work — Python, Google Earth Engine, cloud analysis, machine learning — were
+            barely taught locally, and almost never in Khmer.</p>
+          <p class="story-text">The Island GIS was built to close that gap. Not by lowering the standard, but by making
+            the standard achievable — through live teaching in Khmer, research-grounded content, affordable pricing, and
+            a philosophy that puts the learner's long-term independence above short-term completion.</p>
+          <div class="story-highlight">
+            <div class="story-highlight-title">Why "The Island"?</div>
+            <div class="story-highlight-text">An island is a place you can orient yourself from. It sits in the middle
+              of something vast — like the ocean of geospatial knowledge — and gives you a foundation to explore
+              outward. The Island GIS is meant to be that foundation: a place you start from, not where you stay.</div>
           </div>
-          <div style="display:flex;gap:14px;align-items:flex-start">
-            <div style="width:40px;height:40px;border-radius:10px;background:var(--g-light);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🧠</div>
-            <div><div style="font-weight:700;font-size:14px;color:var(--g1);margin-bottom:3px">Teach How to Learn</div><div style="font-size:13.5px;color:var(--ink-m);line-height:1.6">Beyond the syllabus, we teach students how to read documentation, debug independently, frame questions, and keep building after the course ends.</div></div>
+        </div>
+        <div>
+          <div class="s-label">What Makes Us Different</div>
+          <div class="s-title" style="font-size:26px;margin-bottom:20px">Not just what to do — but how to think</div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <div
+                style="width:40px;height:40px;border-radius:10px;background:var(--g-light);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">
+                🌍</div>
+              <div>
+                <div style="font-weight:700;font-size:14px;color:var(--g1);margin-bottom:3px">Traditional → Modern GIS
+                </div>
+                <div style="font-size:13.5px;color:var(--ink-m);line-height:1.6">We meet students where they are —
+                  experienced with ArcGIS or QGIS — and build from there into Python, GEE, and cloud-scale analysis.
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <div
+                style="width:40px;height:40px;border-radius:10px;background:var(--g-light);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">
+                🧠</div>
+              <div>
+                <div style="font-weight:700;font-size:14px;color:var(--g1);margin-bottom:3px">Teach How to Learn</div>
+                <div style="font-size:13.5px;color:var(--ink-m);line-height:1.6">Beyond the syllabus, we teach students
+                  how to read documentation, debug independently, frame questions, and keep building after the course
+                  ends.</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <div
+                style="width:40px;height:40px;border-radius:10px;background:var(--g-light);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">
+                🔬</div>
+              <div>
+                <div style="font-weight:700;font-size:14px;color:var(--g1);margin-bottom:3px">Research Literacy</div>
+                <div style="font-size:13.5px;color:var(--ink-m);line-height:1.6">Every course connects to published
+                  research. Students learn how to turn real data into a real research output — a skill that serves
+                  careers in NGOs, government, and academia alike.</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <div
+                style="width:40px;height:40px;border-radius:10px;background:var(--g-light);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">
+                🤖</div>
+              <div>
+                <div style="font-weight:700;font-size:14px;color:var(--g1);margin-bottom:3px">AI in the Age of GIS</div>
+                <div style="font-size:13.5px;color:var(--ink-m);line-height:1.6">AI tools change what is possible in
+                  geospatial work. We teach students to use them well — which starts with understanding the code, not
+                  skipping it.</div>
+              </div>
+            </div>
           </div>
-          <div style="display:flex;gap:14px;align-items:flex-start">
-            <div style="width:40px;height:40px;border-radius:10px;background:var(--g-light);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🔬</div>
-            <div><div style="font-weight:700;font-size:14px;color:var(--g1);margin-bottom:3px">Research Literacy</div><div style="font-size:13.5px;color:var(--ink-m);line-height:1.6">Every course connects to published research. Students learn how to turn real data into a real research output — a skill that serves careers in NGOs, government, and academia alike.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Philosophy -->
+    <div class="philosophy-section">
+      <div style="max-width:1080px;margin:0 auto">
+        <div class="s-label" style="color:var(--g5)">Our Philosophy</div>
+        <div class="s-title" style="color:white;margin-top:8px">Four principles we<br>will never compromise on</div>
+        <div class="philosophy-grid">
+          <div class="philosophy-card">
+            <div class="philo-num">01</div>
+            <div class="philo-title">Affordable Access</div>
+            <div class="philo-text">Priced for Cambodian realities. Not internationally — locally. If the price excludes
+              a talented student, it is not a good price.</div>
           </div>
-          <div style="display:flex;gap:14px;align-items:flex-start">
-            <div style="width:40px;height:40px;border-radius:10px;background:var(--g-light);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🤖</div>
-            <div><div style="font-weight:700;font-size:14px;color:var(--g1);margin-bottom:3px">AI in the Age of GIS</div><div style="font-size:13.5px;color:var(--ink-m);line-height:1.6">AI tools change what is possible in geospatial work. We teach students to use them well — which starts with understanding the code, not skipping it.</div></div>
+          <div class="philosophy-card">
+            <div class="philo-num">02</div>
+            <div class="philo-title">Khmer First</div>
+            <div class="philo-text">Complex spatial thinking is clearer in your first language. Every live session is in
+              Khmer. Slides and code are in English because that is what employers and research communities use.</div>
+          </div>
+          <div class="philosophy-card">
+            <div class="philo-num">03</div>
+            <div class="philo-title">Depth Over Speed</div>
+            <div class="philo-text">We do not rush. We would rather teach fewer topics deeply than cover everything
+              superficially. A student who truly understands LULC classification is more valuable than one who has run
+              every GEE function once.</div>
+          </div>
+          <div class="philosophy-card">
+            <div class="philo-num">04</div>
+            <div class="philo-title">Independence as the Goal</div>
+            <div class="philo-text">The best outcome is not that students keep coming back for courses. It is that they
+              can learn the next thing on their own, apply it to their own problems, and teach someone else.</div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Philosophy -->
-  <div class="philosophy-section">
-    <div style="max-width:1080px;margin:0 auto">
-      <div class="s-label" style="color:var(--g5)">Our Philosophy</div>
-      <div class="s-title" style="color:white;margin-top:8px">Four principles we<br>will never compromise on</div>
-      <div class="philosophy-grid">
-        <div class="philosophy-card">
-          <div class="philo-num">01</div>
-          <div class="philo-title">Affordable Access</div>
-          <div class="philo-text">Priced for Cambodian realities. Not internationally — locally. If the price excludes a talented student, it is not a good price.</div>
-        </div>
-        <div class="philosophy-card">
-          <div class="philo-num">02</div>
-          <div class="philo-title">Khmer First</div>
-          <div class="philo-text">Complex spatial thinking is clearer in your first language. Every live session is in Khmer. Slides and code are in English because that is what employers and research communities use.</div>
-        </div>
-        <div class="philosophy-card">
-          <div class="philo-num">03</div>
-          <div class="philo-title">Depth Over Speed</div>
-          <div class="philo-text">We do not rush. We would rather teach fewer topics deeply than cover everything superficially. A student who truly understands LULC classification is more valuable than one who has run every GEE function once.</div>
-        </div>
-        <div class="philosophy-card">
-          <div class="philo-num">04</div>
-          <div class="philo-title">Independence as the Goal</div>
-          <div class="philo-text">The best outcome is not that students keep coming back for courses. It is that they can learn the next thing on their own, apply it to their own problems, and teach someone else.</div>
+    <!-- Who it's for -->
+    <div class="audience-section">
+      <div class="section-inner">
+        <div class="s-label">Who This Is For</div>
+        <div class="s-title">If any of these sound like you,<br>you belong here</div>
+        <div class="audience-grid">
+          <div class="audience-card">
+            <div class="audience-icon">🎓</div>
+            <div class="audience-title">GIS Students</div>
+            <div class="audience-text">You have learned QGIS or ArcGIS at university and want to know how professionals
+              actually work — with Python, automation, and cloud platforms.</div>
+          </div>
+          <div class="audience-card">
+            <div class="audience-icon">🌿</div>
+            <div class="audience-title">Environment & Land Professionals</div>
+            <div class="audience-text">You work in forestry, agriculture, urban planning, or conservation and want to
+              use satellite data to do your job better and faster.</div>
+          </div>
+          <div class="audience-card">
+            <div class="audience-icon">🏛</div>
+            <div class="audience-title">Government & NGO Staff</div>
+            <div class="audience-text">You produce spatial reports and maps for decision-makers and want to move from
+              manual GIS workflows to automated, reproducible analysis.</div>
+          </div>
+          <div class="audience-card">
+            <div class="audience-icon">🔭</div>
+            <div class="audience-title">Aspiring Researchers</div>
+            <div class="audience-text">You want to publish your own research on Cambodian land, climate, or urban
+              environments — and need the geospatial methods to do it credibly.</div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Who it's for -->
-  <div class="audience-section">
-    <div class="section-inner">
-      <div class="s-label">Who This Is For</div>
-      <div class="s-title">If any of these sound like you,<br>you belong here</div>
-      <div class="audience-grid">
-        <div class="audience-card">
-          <div class="audience-icon">🎓</div>
-          <div class="audience-title">GIS Students</div>
-          <div class="audience-text">You have learned QGIS or ArcGIS at university and want to know how professionals actually work — with Python, automation, and cloud platforms.</div>
+    <!-- Founder -->
+    <div class="founder-section">
+      <div class="founder-inner">
+        <div class="founder-card">
+          <div class="founder-avatar">SK</div>
+          <div class="founder-name">Sopheak Khim</div>
+          <div class="founder-role">Founder · The Island GIS<br>Geospatial Data Specialist, IRD</div>
+          <div class="founder-links">
+            <a class="founder-link" href="https://www.linkedin.com/in/sopheak-khim/" target="_blank">💼
+              linkedin.com/in/sopheak-khim</a>
+            <a class="founder-link" href="mailto:khimsopheak750@gmail.com">✉ khimsopheak750@gmail.com</a>
+            <a class="founder-link" href="https://www.facebook.com/share/18QuuVuXCN/" target="_blank">📘 The Island GIS
+              (Facebook)</a>
+            <a class="founder-link" href="https://t.me/islandgis" target="_blank">💬 t.me/islandgis</a>
+          </div>
         </div>
-        <div class="audience-card">
-          <div class="audience-icon">🌿</div>
-          <div class="audience-title">Environment & Land Professionals</div>
-          <div class="audience-text">You work in forestry, agriculture, urban planning, or conservation and want to use satellite data to do your job better and faster.</div>
-        </div>
-        <div class="audience-card">
-          <div class="audience-icon">🏛</div>
-          <div class="audience-title">Government & NGO Staff</div>
-          <div class="audience-text">You produce spatial reports and maps for decision-makers and want to move from manual GIS workflows to automated, reproducible analysis.</div>
-        </div>
-        <div class="audience-card">
-          <div class="audience-icon">🔭</div>
-          <div class="audience-title">Aspiring Researchers</div>
-          <div class="audience-text">You want to publish your own research on Cambodian land, climate, or urban environments — and need the geospatial methods to do it credibly.</div>
+        <div class="founder-right">
+          <div class="s-label">The Founder</div>
+          <div class="s-title" style="font-size:28px;margin-bottom:16px">Built by someone who learned the hard way</div>
+          <p class="founder-bio">Sopheak Khim is a Geospatial Data Specialist at IRD (Institut de Recherche pour le
+            Développement) in Phnom Penh. His career spans humanitarian GIS (HALO Trust), government infrastructure
+            (Ministry of Post and Telecommunications, Ministry of Land Management), and academic remote sensing
+            research.</p>
+          <p class="founder-bio">His published research on Urban Heat Island intensity in Phnom Penh — combining LULC
+            classification, LST retrieval, and NDVI analysis — is the direct foundation of the first Island GIS course.
+            He holds a BSc in Land Management and Land Administration (GIS & Remote Sensing) from the Royal University
+            of Agriculture, GPA 3.4/4.0.</p>
+          <p class="founder-bio">The Island GIS grew out of a simple frustration: the tools and methods that matter most
+            in modern geospatial work were barely taught in Cambodia, almost never in Khmer, and often out of reach
+            financially for the students who needed them most.</p>
+          <div class="founder-facts">
+            <div class="fact-item">
+              <div class="fact-label">Published at</div>
+              <div class="fact-value">KHEOBS Day 2024 · FOSS4G-Asia 2024</div>
+            </div>
+            <div class="fact-item">
+              <div class="fact-label">Research focus</div>
+              <div class="fact-value">Urban Heat Island · LULC · Green Spaces</div>
+            </div>
+            <div class="fact-item">
+              <div class="fact-label">Current role</div>
+              <div class="fact-value">Senior Technician in Geomatics, IRD</div>
+            </div>
+            <div class="fact-item">
+              <div class="fact-label">Education</div>
+              <div class="fact-value">BSc GIS & Remote Sensing, RUA</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Founder -->
-  <div class="founder-section">
-    <div class="founder-inner">
-      <div class="founder-card">
-        <div class="founder-avatar">SK</div>
-        <div class="founder-name">Sopheak Khim</div>
-        <div class="founder-role">Founder · The Island GIS<br>Geospatial Data Specialist, IRD</div>
-        <div class="founder-links">
-          <a class="founder-link" href="https://www.linkedin.com/in/sopheak-khim/" target="_blank">💼 linkedin.com/in/sopheak-khim</a>
-          <a class="founder-link" href="mailto:khimsopheak750@gmail.com">✉ khimsopheak750@gmail.com</a>
-          <a class="founder-link" href="https://www.facebook.com/TheIslandGIS" target="_blank">📘 The Island GIS (Facebook)</a>
+    <div class="cta-banner">
+      <div class="cta-title">Start your journey with us</div>
+      <div class="cta-sub">The first cohort is open now. Early bird price: $100 — first 10 registrations.</div>
+      <div class="cta-btns">
+        <button class="btn btn-outline-white" onclick="showPage('courses')">Browse Courses</button>
+        <button class="btn btn-green" onclick="openPanel('rs-panel')">Enrol Now</button>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-inner">
+        <div>
+          <div class="footer-brand-name">🏝 The Island GIS</div>
+          <div class="footer-brand-tag">Applied Geospatial Education for Cambodia</div>
+          <div class="footer-nav">
+            <button class="footer-nav-link" onclick="showPage('home')">Home</button>
+            <button class="footer-nav-link" onclick="showPage('courses')">Courses</button>
+            <button class="footer-nav-link" onclick="showPage('about')">About</button>
+          </div>
+          <div class="footer-copy">© 2026 The Island GIS · Sopheak Khim · Phnom Penh, Cambodia</div>
+        </div>
+        <div class="footer-social">
+          <a class="social-link" href="https://www.facebook.com/share/18QuuVuXCN/" target="_blank">📘 Facebook</a>
+          <a class="social-link" href="https://www.linkedin.com/in/sopheak-khim/" target="_blank">💼 LinkedIn</a>
+          <a class="social-link" href="https://t.me/islandgis" target="_blank">💬 Telegram</a>
+          <a class="social-link" href="mailto:khimsopheak750@gmail.com">✉ Email</a>
         </div>
       </div>
-      <div class="founder-right">
-        <div class="s-label">The Founder</div>
-        <div class="s-title" style="font-size:28px;margin-bottom:16px">Built by someone who learned the hard way</div>
-        <p class="founder-bio">Sopheak Khim is a Geospatial Data Specialist at IRD (Institut de Recherche pour le Développement) in Phnom Penh. His career spans humanitarian GIS (HALO Trust), government infrastructure (Ministry of Post and Telecommunications, Ministry of Land Management), and academic remote sensing research.</p>
-        <p class="founder-bio">His published research on Urban Heat Island intensity in Phnom Penh — combining LULC classification, LST retrieval, and NDVI analysis — is the direct foundation of the first Island GIS course. He holds a BSc in Land Management and Land Administration (GIS & Remote Sensing) from the Royal University of Agriculture, GPA 3.4/4.0.</p>
-        <p class="founder-bio">The Island GIS grew out of a simple frustration: the tools and methods that matter most in modern geospatial work were barely taught in Cambodia, almost never in Khmer, and often out of reach financially for the students who needed them most.</p>
-        <div class="founder-facts">
-          <div class="fact-item"><div class="fact-label">Published at</div><div class="fact-value">KHEOBS Day 2024 · FOSS4G-Asia 2024</div></div>
-          <div class="fact-item"><div class="fact-label">Research focus</div><div class="fact-value">Urban Heat Island · LULC · Green Spaces</div></div>
-          <div class="fact-item"><div class="fact-label">Current role</div><div class="fact-value">Senior Technician in Geomatics, IRD</div></div>
-          <div class="fact-item"><div class="fact-label">Education</div><div class="fact-value">BSc GIS & Remote Sensing, RUA</div></div>
-        </div>
-      </div>
-    </div>
+    </footer>
   </div>
 
-  <div class="cta-banner">
-    <div class="cta-title">Start your journey with us</div>
-    <div class="cta-sub">The first cohort is open now. Early bird price: $100 — first 10 registrations.</div>
-    <div class="cta-btns">
-      <button class="btn btn-outline-white" onclick="showPage('courses')">Browse Courses</button>
-      <button class="btn btn-green" onclick="openPanel('rs-panel')">Enrol Now</button>
-    </div>
-  </div>
-
-  <footer><div class="footer-inner">
-    <div>
-      <div class="footer-brand-name">🏝 The Island GIS</div>
-      <div class="footer-brand-tag">Applied Geospatial Education for Cambodia</div>
-      <div class="footer-nav">
-        <button class="footer-nav-link" onclick="showPage('home')">Home</button>
-        <button class="footer-nav-link" onclick="showPage('courses')">Courses</button>
-        <button class="footer-nav-link" onclick="showPage('about')">About</button>
-      </div>
-      <div class="footer-copy">© 2026 The Island GIS · Sopheak Khim · Phnom Penh, Cambodia</div>
-    </div>
-    <div class="footer-social">
-      <a class="social-link" href="https://www.facebook.com/TheIslandGIS" target="_blank">📘 Facebook</a>
-      <a class="social-link" href="https://www.linkedin.com/in/sopheak-khim/" target="_blank">💼 LinkedIn</a>
-      <a class="social-link" href="mailto:khimsopheak750@gmail.com">✉ Email</a>
-    </div>
-  </div></footer>
-</div>
-
-<!-- ════════════════════════════════════════════
+  <!-- ════════════════════════════════════════════
   COURSE DETAIL PANELS (overlay drawers)
 ════════════════════════════════════════════ -->
 
-<!-- RS Course Detail -->
-<div class="course-detail-overlay" id="rs-detail" onclick="closeDetail(event,'rs-detail')">
-  <div class="course-detail-panel" onclick="event.stopPropagation()">
-    <div class="panel-header">
-      <button class="panel-close" onclick="closePanel('rs-detail')">✕</button>
-      <div class="course-badge" style="display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#a8d5b5;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:12px;margin-bottom:12px">Course Details</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:white;line-height:1.15;margin-bottom:6px">Remote Sensing Analysis with Python & GEE</div>
-      <div style="font-size:13px;color:rgba(255,255,255,.6);font-style:italic">A Live Applied Geospatial Cohort for Cambodia · 15 Weeks · 60 Hours</div>
-    </div>
-    <div class="panel-body">
-      <div class="panel-section">
-        <div class="panel-section-title">Learning Outcomes</div>
-        <ul class="outcome-list">
-          <li>Process raster and vector geospatial data using Python and JupyterLab</li>
-          <li>Access and analyse satellite imagery using the Google Earth Engine Python API</li>
-          <li>Calculate and interpret spectral indices — NDVI, NDWI, and NDBI</li>
-          <li>Perform land use/land cover classification using SVM and Random Forest</li>
-          <li>Conduct Urban Heat Island analysis and land cover change detection</li>
-          <li>Analyse 10-year satellite time series and export results</li>
-          <li>Produce publication-quality maps and interactive GEE web apps</li>
-          <li>Publish a reproducible geospatial project on GitHub</li>
-        </ul>
+  <!-- RS Course Detail -->
+  <div class="course-detail-overlay" id="rs-detail" onclick="closeDetail(event,'rs-detail')">
+    <div class="course-detail-panel" onclick="event.stopPropagation()">
+      <div class="panel-header">
+        <button class="panel-close" onclick="closePanel('rs-detail')">✕</button>
+        <div class="course-badge"
+          style="display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#a8d5b5;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:12px;margin-bottom:12px">
+          Course Details</div>
+        <div
+          style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:white;line-height:1.15;margin-bottom:6px">
+          Remote Sensing Analysis with Python & GEE</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.6);font-style:italic">A Live Applied Geospatial Cohort for
+          Cambodia · 15 Weeks · 60 Hours</div>
       </div>
-      <div class="panel-section">
-        <div class="panel-section-title">15-Week Schedule</div>
-        <div class="week-list">
-          <div class="week-item"><span class="wk-num">01</span>Course Setup & Python Foundations for GIS Users</div>
-          <div class="week-item"><span class="wk-num">02</span>GEE JavaScript Code Editor & Python API</div>
-          <div class="week-item"><span class="wk-num">03</span>GEE Python API Deep Dive & Antigravity Introduction</div>
-          <div class="week-item"><span class="wk-num">04</span>Spectral Indices — NDVI, NDWI & NDBI</div>
-          <div class="week-item"><span class="wk-num">05</span>LULC Classification — SVM</div>
-          <div class="week-item"><span class="wk-num">06</span>LULC Classification — Random Forest & Comparison</div>
-          <div class="week-item"><span class="wk-num">07</span>Urban Heat Island Analysis</div>
-          <div class="week-item"><span class="wk-num">08</span>Change Detection</div>
-          <div class="week-item"><span class="wk-num">09</span>Time Series Analysis</div>
-          <div class="week-item"><span class="wk-num">10</span>Visualisation & Reporting — Part 1</div>
-          <div class="week-item"><span class="wk-num">11</span>Visualisation & Reporting — Part 2</div>
-          <div class="week-item"><span class="wk-num">12</span>Capstone — Guidance, Lab & Bug Fix</div>
-          <div class="week-item"><span class="wk-num">13</span>Capstone Presentations</div>
-          <div class="week-item bonus"><span class="wk-num" style="color:var(--g3)">14</span>Personal Project Discussion & Mentorship</div>
-          <div class="week-item bonus"><span class="wk-num" style="color:var(--g3)">15</span>GitHub Portfolio Preparation & Course Wrap-up</div>
+      <div class="panel-body">
+        <div class="panel-section">
+          <div class="panel-section-title">Learning Outcomes</div>
+          <ul class="outcome-list">
+            <li>Process raster and vector geospatial data using Python and JupyterLab</li>
+            <li>Access and analyse satellite imagery using the Google Earth Engine Python API</li>
+            <li>Calculate and interpret spectral indices — NDVI, NDWI, and NDBI</li>
+            <li>Perform land use/land cover classification using SVM and Random Forest</li>
+            <li>Conduct Urban Heat Island analysis and land cover change detection</li>
+            <li>Analyse 10-year satellite time series and export results</li>
+            <li>Produce publication-quality maps and interactive GEE web apps</li>
+            <li>Publish a reproducible geospatial project on GitHub</li>
+          </ul>
         </div>
-      </div>
-    </div>
-    <div class="panel-footer">
-      <button class="btn btn-green" onclick="closePanel('rs-detail');openPanel('rs-panel')">Register Now — $100 Early Bird</button>
-      <button class="btn btn-ghost" onclick="openDetail('rs-instructor')">View Instructor →</button>
-      <button class="btn btn-ghost" onclick="closePanel('rs-detail')">Close</button>
-    </div>
-  </div>
-</div>
-
-<!-- RS Instructor Panel -->
-<div class="course-detail-overlay" id="rs-instructor" onclick="closeDetail(event,'rs-instructor')">
-  <div class="course-detail-panel" onclick="event.stopPropagation()">
-    <div class="panel-header">
-      <button class="panel-close" onclick="closePanel('rs-instructor')">✕</button>
-      <div class="course-badge" style="display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#a8d5b5;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:12px;margin-bottom:12px">Instructor</div>
-      <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:white">Sopheak Khim</div>
-      <div style="font-size:13px;color:rgba(255,255,255,.6);margin-top:4px">Geospatial Data Specialist · IRD · Phnom Penh</div>
-    </div>
-    <div class="panel-body">
-      <div class="panel-instructor">
-        <div class="inst-avatar">SK</div>
-        <div>
-          <div class="inst-name">Sopheak Khim</div>
-          <div class="inst-role">Geospatial Data Specialist · IRD · Founder, The Island GIS</div>
-          <div class="inst-tags">
-            <span class="inst-tag">Remote Sensing</span><span class="inst-tag">Python</span>
-            <span class="inst-tag">Google Earth Engine</span><span class="inst-tag">Urban Heat Island</span>
-            <span class="inst-tag">Machine Learning</span><span class="inst-tag">LULC</span>
+        <div class="panel-section">
+          <div class="panel-section-title">Tools you will use</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
+            <span
+              style="font-size:13px;font-weight:600;padding:6px 14px;border-radius:20px;background:var(--g-pale);color:var(--g3);border:1px solid var(--border)">Google
+              Earth Engine</span>
+            <span
+              style="font-size:13px;font-weight:600;padding:6px 14px;border-radius:20px;background:var(--g-pale);color:var(--g3);border:1px solid var(--border)">Python</span>
+            <span
+              style="font-size:13px;font-weight:600;padding:6px 14px;border-radius:20px;background:var(--g-pale);color:var(--g3);border:1px solid var(--border)">QGIS</span>
+            <span
+              style="font-size:13px;font-weight:600;padding:6px 14px;border-radius:20px;background:var(--g-pale);color:var(--g3);border:1px solid var(--border)">Antigravity</span>
+          </div>
+        </div>
+        <div class="panel-section">
+          <div class="panel-section-title">15-Week Schedule</div>
+          <div class="week-list">
+            <div class="week-item"><span class="wk-num">01</span>Course Setup & Python Foundations for GIS Users</div>
+            <div class="week-item"><span class="wk-num">02</span>GEE JavaScript Code Editor & Python API</div>
+            <div class="week-item"><span class="wk-num">03</span>GEE Python API Deep Dive & Antigravity Introduction
+            </div>
+            <div class="week-item"><span class="wk-num">04</span>Spectral Indices — NDVI, NDWI & NDBI</div>
+            <div class="week-item"><span class="wk-num">05</span>LULC Classification — SVM</div>
+            <div class="week-item"><span class="wk-num">06</span>LULC Classification — Random Forest & Comparison</div>
+            <div class="week-item"><span class="wk-num">07</span>Urban Heat Island Analysis</div>
+            <div class="week-item"><span class="wk-num">08</span>Change Detection</div>
+            <div class="week-item"><span class="wk-num">09</span>Time Series Analysis</div>
+            <div class="week-item"><span class="wk-num">10</span>Visualisation & Reporting — Part 1</div>
+            <div class="week-item"><span class="wk-num">11</span>Visualisation & Reporting — Part 2</div>
+            <div class="week-item"><span class="wk-num">12</span>Capstone — Guidance, Lab & Bug Fix</div>
+            <div class="week-item"><span class="wk-num">13</span>Capstone Presentations</div>
+            <div class="week-item bonus"><span class="wk-num" style="color:var(--g3)">14</span>Personal Project
+              Discussion & Mentorship</div>
+            <div class="week-item bonus"><span class="wk-num" style="color:var(--g3)">15</span>GitHub Portfolio
+              Preparation & Course Wrap-up</div>
           </div>
         </div>
       </div>
-      <div class="panel-section" style="margin-top:24px">
-        <div class="panel-section-title">Background</div>
-        <p style="font-size:14px;color:var(--ink-m);line-height:1.7;margin-bottom:14px">Geospatial specialist with cross-sector experience across humanitarian demining (HALO Trust Cambodia), government infrastructure (Ministry of Post and Telecommunications, Ministry of Land Management), and academic remote sensing research (IRD). Published researcher at KHEOBS Day 2024 and FOSS4G-Asia 2024.</p>
-        <p style="font-size:14px;color:var(--ink-m);line-height:1.7">Holds a BSc in Land Management and Land Administration (GIS & Remote Sensing) from the Royal University of Agriculture, GPA 3.4/4.0. His published UHI research on Phnom Penh forms the backbone of the Urban Heat Island module in this course — students work from real, published methodology.</p>
-      </div>
-      <div class="panel-section">
-        <div class="panel-section-title">Published Research</div>
-        <div style="background:var(--g-pale);border-left:4px solid var(--g4);border-radius:8px;padding:16px;margin-bottom:12px">
-          <div style="font-weight:700;font-size:13.5px;color:var(--g1);margin-bottom:4px">Effects of Land Use/Land Cover Changes on Surface Urban Heat Island Intensity in Phnom Penh</div>
-          <div style="font-size:12.5px;color:var(--ink-l)">KHEOBS Day 2024 · LST retrieval · NDVI correlation · Emissivity correction</div>
-        </div>
-        <div style="background:var(--g-pale);border-left:4px solid var(--g4);border-radius:8px;padding:16px">
-          <div style="font-weight:700;font-size:13.5px;color:var(--g1);margin-bottom:4px">Urban Green Space Mapping and Analysis — Phnom Penh</div>
-          <div style="font-size:12.5px;color:var(--ink-l)">FOSS4G-Asia 2024 · NDVI-based extraction · Urban ecology</div>
-        </div>
-      </div>
-    </div>
-    <div class="panel-footer">
-      <button class="btn btn-green" onclick="closePanel('rs-instructor');openPanel('rs-panel')">Register for This Course</button>
-      <button class="btn btn-ghost" onclick="closePanel('rs-instructor')">Close</button>
-    </div>
-  </div>
-</div>
-
-<!-- RS Register Panel -->
-<div class="course-detail-overlay" id="rs-panel" onclick="closeDetail(event,'rs-panel')">
-  <div class="course-detail-panel" onclick="event.stopPropagation()" style="max-width:560px">
-    <div class="panel-header">
-      <button class="panel-close" onclick="closePanel('rs-panel')">✕</button>
-      <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:white;margin-bottom:6px">Register for the First Cohort</div>
-      <div style="font-size:13px;color:rgba(255,255,255,.6)">Remote Sensing Analysis with Python & GEE · 15 Weeks</div>
-    </div>
-    <div class="panel-body">
-      <div style="display:flex;gap:12px;margin-bottom:24px">
-        <div style="flex:1;background:var(--gold-l);border:2px solid var(--gold);border-radius:12px;padding:16px">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--earth);letter-spacing:.1em;margin-bottom:4px">🐦 Early Bird · First 10 Only</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:var(--earth)">$100</div>
-          <div style="font-size:12px;color:var(--ink-l)">~400,000 KHR</div>
-        </div>
-        <div style="flex:1;background:white;border:1.5px solid var(--border);border-radius:12px;padding:16px">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--ink-l);letter-spacing:.1em;margin-bottom:4px">Full Price · After 10</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:var(--ink)">$120</div>
-          <div style="font-size:12px;color:var(--ink-l)">~480,000 KHR</div>
-        </div>
-      </div>
-      <div style="background:var(--g-pale);border-radius:12px;padding:20px;margin-bottom:24px;text-align:center">
-        <div style="font-size:14px;font-weight:600;color:var(--g1);margin-bottom:8px">Registration Form</div>
-        <div style="font-size:13px;color:var(--ink-l);margin-bottom:14px">Fill in the registration form and complete payment via ABA Pay or ACLEDA.</div>
-        <button class="btn btn-green" onclick="alert('Replace with your Google Form link!')">Open Registration Form →</button>
-        <div style="font-size:11px;color:var(--ink-l);margin-top:10px">Questions? Telegram / WhatsApp: [your number]</div>
-      </div>
-      <div style="font-size:13px;color:var(--ink-l);text-align:center;line-height:1.6">
-        📅 15 weeks · Sat & Sun · Google Meet · Khmer language<br>
-        👥 Max 30 students · First come, first served<br>
-        📁 Outcome: GitHub portfolio + live GEE App
+      <div class="panel-footer">
+        <button class="btn btn-green" onclick="closePanel('rs-detail');openPanel('rs-panel')">Register Now — $100 Early
+          Bird</button>
+        <button class="btn btn-outline-green"
+          onclick="window.open('https://docs.google.com/document/d/1KjYzbsztW9LcXhZtk-U7ntzO9S-PyTxL/edit?usp=sharing&ouid=106652079761232169524&rtpof=true&sd=true', '_blank')">Detailed
+          Syllabus</button>
+        <button class="btn btn-ghost" onclick="openDetail('rs-instructor')">View Instructor →</button>
+        <button class="btn btn-ghost" onclick="closePanel('rs-detail')">Close</button>
       </div>
     </div>
   </div>
-</div>
 
-<script>
-function showPage(id) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
-  const map = {home:0, courses:1, about:2};
-  const links = document.querySelectorAll('.nav-link');
-  if (map[id] !== undefined) links[map[id]].classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
+  <!-- RS Instructor Panel -->
+  <div class="course-detail-overlay" id="rs-instructor" onclick="closeDetail(event,'rs-instructor')">
+    <div class="course-detail-panel" onclick="event.stopPropagation()">
+      <div class="panel-header">
+        <button class="panel-close" onclick="closePanel('rs-instructor')">✕</button>
+        <div class="course-badge"
+          style="display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#a8d5b5;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:12px;margin-bottom:12px">
+          Instructor</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:white">Sopheak Khim
+        </div>
+        <div style="font-size:13px;color:rgba(255,255,255,.6);margin-top:4px">Geospatial Data Specialist · IRD · Phnom
+          Penh</div>
+      </div>
+      <div class="panel-body">
+        <div class="panel-instructor">
+          <div class="inst-avatar">SK</div>
+          <div>
+            <div class="inst-name">Sopheak Khim</div>
+            <div class="inst-role">Geospatial Data Specialist · IRD · Founder, The Island GIS</div>
+            <div class="inst-tags">
+              <span class="inst-tag">Remote Sensing</span><span class="inst-tag">Python</span>
+              <span class="inst-tag">Google Earth Engine</span><span class="inst-tag">Urban Heat Island</span>
+              <span class="inst-tag">Machine Learning</span><span class="inst-tag">LULC</span>
+            </div>
+          </div>
+        </div>
+        <div class="panel-section" style="margin-top:24px">
+          <div class="panel-section-title">Background</div>
+          <p style="font-size:14px;color:var(--ink-m);line-height:1.7;margin-bottom:14px">Geospatial specialist with
+            cross-sector experience across humanitarian demining (HALO Trust Cambodia), government infrastructure
+            (Ministry of Post and Telecommunications, Ministry of Land Management), and academic remote sensing research
+            (IRD). Published researcher at KHEOBS Day 2024 and FOSS4G-Asia 2024.</p>
+          <p style="font-size:14px;color:var(--ink-m);line-height:1.7">Holds a BSc in Land Management and Land
+            Administration (GIS & Remote Sensing) from the Royal University of Agriculture and he is currently pursuing
+            a MSC in Digital Economy (City Planning Focus) at National University of Management. His published UHI
+            research on Phnom Penh forms the backbone of the Urban Heat Island module in this course — students work
+            from real, published methodology.</p>
+        </div>
+        <div class="panel-section">
+          <div class="panel-section-title">Published Research</div>
+          <div
+            style="background:var(--g-pale);border-left:4px solid var(--g4);border-radius:8px;padding:16px;margin-bottom:12px">
+            <div style="font-weight:700;font-size:13.5px;color:var(--g1);margin-bottom:4px">Effects of Land Use/Land
+              Cover Changes on Surface Urban Heat Island Intensity in Phnom Penh</div>
+            <div style="font-size:12.5px;color:var(--ink-l)">KHEOBS Day 2024 · LST retrieval · NDVI correlation ·
+              Emissivity correction</div>
+          </div>
+          <div style="background:var(--g-pale);border-left:4px solid var(--g4);border-radius:8px;padding:16px">
+            <div style="font-weight:700;font-size:13.5px;color:var(--g1);margin-bottom:4px">Urban Green Space Mapping
+              and Analysis — Phnom Penh</div>
+            <div style="font-size:12.5px;color:var(--ink-l)">FOSS4G-Asia 2024 · NDVI-based extraction · Urban ecology
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button class="btn btn-green" onclick="closePanel('rs-instructor');openPanel('rs-panel')">Register for This
+          Course</button>
+        <button class="btn btn-ghost" onclick="closePanel('rs-instructor')">Close</button>
+      </div>
+    </div>
+  </div>
 
-function openPanel(id) {
-  document.getElementById(id).classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function openDetail(id) {
-  // Close any open panels first
-  document.querySelectorAll('.course-detail-overlay.open').forEach(el => el.classList.remove('open'));
-  document.getElementById(id).classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closePanel(id) {
-  document.getElementById(id).classList.remove('open');
-  document.body.style.overflow = '';
-}
-function closeDetail(event, id) {
-  if (event.target === document.getElementById(id)) {
-    closePanel(id);
-  }
-}
-</script>
+  <!-- RS Register Panel -->
+  <div class="course-detail-overlay" id="rs-panel" onclick="closeDetail(event,'rs-panel')">
+    <div class="course-detail-panel" onclick="event.stopPropagation()" style="max-width:560px">
+      <div class="panel-header">
+        <button class="panel-close" onclick="closePanel('rs-panel')">✕</button>
+        <div
+          style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:white;margin-bottom:6px">
+          Register for the First Cohort</div>
+        <div style="font-size:13px;color:rgba(255,255,255,.6)">Remote Sensing Analysis with Python & GEE · 15 Weeks
+        </div>
+      </div>
+      <div class="panel-body">
+        <div style="display:flex;gap:12px;margin-bottom:24px">
+          <div style="flex:1;background:var(--gold-l);border:2px solid var(--gold);border-radius:12px;padding:16px">
+            <div
+              style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--earth);letter-spacing:.1em;margin-bottom:4px">
+              🐦 Early Bird · First 10 Only</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:var(--earth)">$100
+            </div>
+            <div style="font-size:12px;color:var(--ink-l)">~400,000 KHR</div>
+          </div>
+          <div style="flex:1;background:white;border:1.5px solid var(--border);border-radius:12px;padding:16px">
+            <div
+              style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--ink-l);letter-spacing:.1em;margin-bottom:4px">
+              Full Price · After 10</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;color:var(--ink)">$120
+            </div>
+            <div style="font-size:12px;color:var(--ink-l)">~480,000 KHR</div>
+          </div>
+        </div>
+        <div style="background:var(--g-pale);border-radius:12px;padding:20px;margin-bottom:24px;text-align:center">
+          <div style="font-size:14px;font-weight:600;color:var(--g1);margin-bottom:8px">Registration Form</div>
+          <div style="font-size:13px;color:var(--ink-l);margin-bottom:14px">Fill in the registration form and complete
+            payment via ABA Pay or ACLEDA.</div>
+          <button class="btn btn-green" onclick="window.open('https://forms.gle/KyNv1i9qUt9xDzmD9', '_blank')">Open
+            Registration Form →</button>
+          <div style="font-size:11px;color:var(--ink-l);margin-top:10px">Questions? Telegram channel: <a
+              href="https://t.me/islandgis" target="_blank"
+              style="color:inherit;text-decoration:underline;">https://t.me/islandgis</a></div>
+        </div>
+        <div style="font-size:13px;color:var(--ink-l);text-align:center;line-height:1.6">
+          📅 15 weeks · Sat & Sun · Google Meet · Khmer language<br>
+          👥 Max 30 students · First come, first served<br>
+          📁 Outcome: GitHub portfolio + live GEE App
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showPage(id) {
+      const targetPage = document.getElementById('page-' + id);
+      if (!targetPage) {
+        id = 'home'; // fallback for invalid hash
+      }
+
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+
+      document.getElementById('page-' + id).classList.add('active');
+
+      const map = { home: 0, courses: 1, about: 2 };
+      const links = document.querySelectorAll('.nav-link');
+      if (map[id] !== undefined) links[map[id]].classList.add('active');
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // update URL hash
+      window.location.hash = id;
+    }
+
+    // load page from URL on startup
+    window.addEventListener('load', () => {
+      const page = window.location.hash.replace('#', '');
+      if (page) {
+        showPage(page);
+      } else {
+        showPage('home');
+      }
+    });
+
+    function openPanel(id) {
+      document.getElementById(id).classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function openDetail(id) {
+      // Close any open panels first
+      document.querySelectorAll('.course-detail-overlay.open').forEach(el => el.classList.remove('open'));
+      document.getElementById(id).classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closePanel(id) {
+      document.getElementById(id).classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function closeDetail(event, id) {
+      if (event.target === document.getElementById(id)) {
+        closePanel(id);
+      }
+    }
+  </script>
 </body>
+
 </html>
